@@ -2,12 +2,16 @@ package com.toy.jeongoo.user.service;
 
 import com.toy.jeongoo.user.controller.dto.AddressDto;
 import com.toy.jeongoo.user.controller.dto.request.SignUpRequest;
+import com.toy.jeongoo.user.controller.dto.response.SignInResponse;
 import com.toy.jeongoo.user.model.Address;
 import com.toy.jeongoo.user.model.User;
 import com.toy.jeongoo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +35,16 @@ public class LoginService {
         userRepository.save(user);
 
         return user.getId();
+    }
+
+    @Transactional(readOnly = true)
+    public SignInResponse signIn(String email, String password) {
+        final Optional<User> findUser = userRepository.findByEmailAndPassword(email, password);
+        if (!findUser.isPresent()) {
+            throw new NoSuchElementException("not found user!");
+        }
+
+        return new SignInResponse(findUser.get());
     }
 
     private void checkDuplicatedEmail(String email) {
