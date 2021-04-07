@@ -1,11 +1,12 @@
-package com.toy.jeongoo.user.controller.dto.response;
+package com.toy.jeongoo.user.api.dto.response;
 
-import com.toy.jeongoo.user.controller.dto.AddressDto;
-import com.toy.jeongoo.user.model.Address;
+import com.toy.jeongoo.user.api.dto.AddressDto;
 import com.toy.jeongoo.user.model.Gender;
 import com.toy.jeongoo.user.model.User;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @NoArgsConstructor
 public class SignInResponse {
 
@@ -18,6 +19,7 @@ public class SignInResponse {
     private AddressDto address;
 
     public SignInResponse(User user) {
+        this.id = user.getId();
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.name = user.getName();

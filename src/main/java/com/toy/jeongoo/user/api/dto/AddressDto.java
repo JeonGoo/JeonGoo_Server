@@ -1,4 +1,4 @@
-package com.toy.jeongoo.user.controller.dto;
+package com.toy.jeongoo.user.api.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

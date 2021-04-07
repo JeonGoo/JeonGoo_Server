@@ -1,4 +1,4 @@
-package com.toy.jeongoo.user.controller.dto.request;
+package com.toy.jeongoo.user.api.dto.request;
 
 import lombok.AccessLevel;
 import lombok.Getter;
