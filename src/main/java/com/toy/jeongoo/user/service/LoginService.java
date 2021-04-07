@@ -1,18 +1,20 @@
 package com.toy.jeongoo.user.service;
 
-import com.toy.jeongoo.user.controller.dto.AddressDto;
-import com.toy.jeongoo.user.controller.dto.request.SignUpRequest;
-import com.toy.jeongoo.user.controller.dto.response.SignInResponse;
+import com.toy.jeongoo.user.api.dto.AddressDto;
+import com.toy.jeongoo.user.api.dto.request.SignUpRequest;
+import com.toy.jeongoo.user.api.dto.response.SignInResponse;
 import com.toy.jeongoo.user.model.Address;
 import com.toy.jeongoo.user.model.User;
 import com.toy.jeongoo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class LoginService {
