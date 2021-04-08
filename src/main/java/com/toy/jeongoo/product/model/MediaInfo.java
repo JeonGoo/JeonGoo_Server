@@ -1,4 +1,4 @@
-package com.toy.jeongoo.product;
+package com.toy.jeongoo.product.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

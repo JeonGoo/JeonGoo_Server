@@ -12,9 +12,20 @@ import static lombok.AccessLevel.*;
 @NoArgsConstructor(access = PROTECTED)
 public class Money {
 
-    private int value;
+    private Long value;
 
-    public Money(int value) {
+    public Money(Long value) {
+        checkNegativeValue(value);
         this.value = value;
+    }
+
+    public static Money of(Long value) {
+        return new Money(value);
+    }
+
+    private void checkNegativeValue(Long value) {
+        if (value < 0) {
+            throw new IllegalArgumentException(String.format("money should not be negative. input money: %d", value));
+        }
     }
 }
