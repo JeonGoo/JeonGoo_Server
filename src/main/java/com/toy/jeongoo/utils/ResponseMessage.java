@@ -9,4 +9,8 @@ public class ResponseMessage {
 
     public static String LOGIN_USER = "로그인 성공";
     public static String LOGIN_USER_FAIL = "로그인 실패";
+
+    // product
+    public static String REGISTER_PRODUCT = "상품 등록 성공";
+    public static String REGISTER_PRODUCT_FAIL = "상품 등록 실패";
 }
