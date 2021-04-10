@@ -11,6 +11,7 @@ import javax.persistence.*;
 
 import java.util.List;
 
+import static com.toy.jeongoo.product.model.status.CertificationStatus.*;
 import static javax.persistence.EnumType.*;
 import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
@@ -40,6 +41,7 @@ public class Product {
     private String description;
 
     @Embedded
+    @Column(nullable = false)
     private Money price;
 
     @Embedded
@@ -61,9 +63,21 @@ public class Product {
         this.serialNumber = serialNumber;
         this.description = description;
         this.useStatus = useStatus;
-        this.mediaInfo = new MediaInfo(imagePaths, videoPath);
-        this.certificationStatus = CertificationStatus.NONE;
+        this.mediaInfo = new MediaInfo(imagePaths.get(0), videoPath);
+        this.certificationStatus = REQUEST;
         this.grade = ProductGrade.NONE;
         this.user = user;
+    }
+
+    public void certify(ProductGrade grade) {
+        checkCanCertification();
+        this.certificationStatus = COMPLETED;
+        this.grade = grade;
+    }
+
+    private void checkCanCertification() {
+        if (this.certificationStatus == COMPLETED || this.certificationStatus == FAILED) {
+            throw new IllegalArgumentException("the product has already been certify or failed to certification.");
+        }
     }
 }

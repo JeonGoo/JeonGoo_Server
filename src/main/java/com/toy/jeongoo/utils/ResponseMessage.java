@@ -13,4 +13,7 @@ public class ResponseMessage {
     // product
     public static String REGISTER_PRODUCT = "상품 등록 성공";
     public static String REGISTER_PRODUCT_FAIL = "상품 등록 실패";
+
+    public static String CERTIFICATE_PRODUCT = "정품 인증 성공";
+    public static String CERTIFICATE_PRODUCT_ERROR = "정품 인증 오류";
 }

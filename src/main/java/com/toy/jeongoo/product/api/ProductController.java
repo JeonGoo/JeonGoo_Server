@@ -2,7 +2,9 @@ package com.toy.jeongoo.product.api;
 
 import com.toy.jeongoo.product.api.dto.MediaInfoDto;
 import com.toy.jeongoo.product.api.dto.request.MediaInfoRequest;
+import com.toy.jeongoo.product.api.dto.request.ProductCertificationRequest;
 import com.toy.jeongoo.product.api.dto.request.ProductRegistrationRequest;
+import com.toy.jeongoo.product.service.ProductCertificationService;
 import com.toy.jeongoo.product.service.ProductRegistrationService;
 import com.toy.jeongoo.upload.FileUploadService;
 import com.toy.jeongoo.utils.DefaultResponse;
@@ -23,6 +25,7 @@ import static com.toy.jeongoo.utils.StatusCode.*;
 public class ProductController {
 
     private final ProductRegistrationService registrationService;
+    private final ProductCertificationService certificationService;
     private final FileUploadService fileUploadService;
 
     @PostMapping("/users/{userId}")
@@ -35,6 +38,18 @@ public class ProductController {
         } catch (Exception productRegistrationException) {
             log.error(productRegistrationException.getMessage());
             return DefaultResponse.res(BAD_REQUEST, REGISTER_PRODUCT_FAIL);
+        }
+    }
+
+    @PutMapping("/{productId}/certification")
+    public DefaultResponse<Long> certify(@PathVariable Long productId,
+                                         @RequestBody ProductCertificationRequest certificationRequest) {
+        try {
+            final Long certificationProduct = certificationService.certify(productId, certificationRequest);
+            return DefaultResponse.res(OK, CERTIFICATE_PRODUCT, certificationProduct);
+        } catch (Exception productException) {
+            log.error(productException.getMessage());
+            return DefaultResponse.res(BAD_REQUEST, CERTIFICATE_PRODUCT_ERROR);
         }
     }
 
