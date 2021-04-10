@@ -53,6 +53,8 @@ public class Product {
     @Enumerated(value = STRING)
     private CertificationStatus certificationStatus;
 
+    private String certificationFailedReason;
+
     @Enumerated(value = STRING)
     private ProductGrade grade;
 
@@ -75,9 +77,21 @@ public class Product {
         this.grade = grade;
     }
 
+    public void certifyFailed(String certificationFailedReason) {
+        checkAlreadyCertifyFailed();
+        this.certificationStatus = FAILED;
+        this.certificationFailedReason = certificationFailedReason;
+    }
+
     private void checkCanCertification() {
         if (this.certificationStatus == COMPLETED || this.certificationStatus == FAILED) {
             throw new IllegalArgumentException("the product has already been certify or failed to certification.");
+        }
+    }
+
+    private void checkAlreadyCertifyFailed() {
+        if (this.certificationStatus == FAILED) {
+            throw new IllegalArgumentException("the product has already been failed to certification.");
         }
     }
 }

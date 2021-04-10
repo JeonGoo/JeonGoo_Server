@@ -23,6 +23,13 @@ public class ProductCertificationService {
         return product.getId();
     }
 
+    @Transactional
+    public Long failed(Long productId, ProductCertificationFailedRequest certificationFailedRequest) {
+        final Product product = findProductById(productId);
+        product.certifyFailed(certificationFailedRequest.getCertificationFailedReason());
+        return product.getId();
+    }
+
     private Product findProductById(Long productId) {
         return productRepository.findById(productId)
                 .orElseThrow(() -> new NoSuchElementException(String.format("not found product. input Id: %d", productId)));

@@ -16,4 +16,7 @@ public class ResponseMessage {
 
     public static String CERTIFICATE_PRODUCT = "정품 인증 성공";
     public static String CERTIFICATE_PRODUCT_ERROR = "정품 인증 오류";
+
+    public static String CERTIFICATE_PRODUCT_FAIL = "정품 인증 실패 알림 성공";
+    public static String CERTIFICATE_PRODUCT_FAIL_ERROR = "정품 인증 실패 알림 오류";
 }
