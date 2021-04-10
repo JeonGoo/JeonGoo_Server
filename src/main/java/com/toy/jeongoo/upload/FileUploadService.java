@@ -5,6 +5,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public interface FileUploadService {
-
     String upload(MultipartFile file);
 }
