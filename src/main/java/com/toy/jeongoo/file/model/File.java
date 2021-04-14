@@ -25,12 +25,11 @@ public class File {
     private MediaType mediaType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn("product_id")
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    public File(String path, MediaType mediaType, Product product) {
+    public File(String path, MediaType mediaType) {
         this.path = path;
         this.mediaType = mediaType;
-        this.product = product;
     }
 }

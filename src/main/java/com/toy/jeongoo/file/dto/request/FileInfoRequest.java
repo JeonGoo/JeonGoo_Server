@@ -1,4 +1,4 @@
-package com.toy.jeongoo.product.api.dto.request;
+package com.toy.jeongoo.file.dto.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,12 +8,12 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class MediaInfoRequest {
+public class FileInfoRequest {
 
     private List<MultipartFile> imageFiles;
     private MultipartFile videoFile;
 
-    public MediaInfoRequest(List<MultipartFile> imageFiles, MultipartFile videoFile) {
+    public FileInfoRequest(List<MultipartFile> imageFiles, MultipartFile videoFile) {
         this.imageFiles = imageFiles;
         this.videoFile = videoFile;
     }
