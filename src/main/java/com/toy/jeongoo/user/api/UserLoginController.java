@@ -19,7 +19,7 @@ import static com.toy.jeongoo.utils.StatusCode.*;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
-public class UserController {
+public class UserLoginController {
 
     private final LoginService loginService;
 
