@@ -21,6 +21,7 @@ public class File {
 
     private String path;
 
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "media_type")
     private MediaType mediaType;
 
@@ -31,5 +32,9 @@ public class File {
     public File(String path, MediaType mediaType) {
         this.path = path;
         this.mediaType = mediaType;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }
