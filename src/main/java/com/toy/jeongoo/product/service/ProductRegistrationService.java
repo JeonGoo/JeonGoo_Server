@@ -1,6 +1,8 @@
 package com.toy.jeongoo.product.service;
 
-import com.toy.jeongoo.product.api.dto.MediaInfoDto;
+import com.toy.jeongoo.file.dto.request.FileInfoRequest;
+import com.toy.jeongoo.file.model.File;
+import com.toy.jeongoo.file.service.FileService;
 import com.toy.jeongoo.product.api.dto.request.ProductBasicInfoRequest;
 import com.toy.jeongoo.product.model.Product;
 import com.toy.jeongoo.product.repository.ProductRepository;
@@ -10,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -18,12 +21,14 @@ public class ProductRegistrationService {
 
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final FileService fileService;
 
     @Transactional
-    public Long register(ProductBasicInfoRequest productBasicInfo, MediaInfoDto mediaInfoDto, Long userId) {
+    public Long register(ProductBasicInfoRequest productBasicInfo, FileInfoRequest fileInfo, Long userId) {
         final User user = findUserById(userId);
-        final Product product = new Product(productBasicInfo.getName(), productBasicInfo.getPrice(), productBasicInfo.getSerialNumber(), productBasicInfo.getDescription(),
-                productBasicInfo.getUseStatus(), mediaInfoDto.getImagePaths(), mediaInfoDto.getVideoPath(), user);
+        final List<File> uploadedFileList = fileService.upload(fileInfo);
+        final Product product = new Product(productBasicInfo.getName(), productBasicInfo.getPrice(), productBasicInfo.getSerialNumber(),
+                productBasicInfo.getDescription(), productBasicInfo.getUseStatus(), user, uploadedFileList);
         productRepository.save(product);
 
         return product.getId();
