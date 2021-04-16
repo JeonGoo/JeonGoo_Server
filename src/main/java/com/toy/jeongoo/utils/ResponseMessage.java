@@ -31,4 +31,7 @@ public class ResponseMessage {
 
     public static String SHOW_PRODUCT = "상품 조회 성공";
     public static String SHOW_PRODUCT_FAIL = "상품 조회 실패";
+
+    public static String UPDATE_PRODUCT = "상품 수정 성공";
+    public static String UPDATE_PRODUCT_FAIL = "상품 수정 실패";
 }

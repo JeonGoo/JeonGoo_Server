@@ -85,8 +85,22 @@ public class Product {
         this.certificationFailedReason = certificationFailedReason;
     }
 
+    public void update(String name, Long price, String serialNumber, String description, UseStatus useStatus, List<File> fileList) {
+        this.name = name;
+        this.serialNumber = serialNumber;
+        this.description = description;
+        this.price = Money.of(price);
+        this.useStatus = useStatus;
+        this.certificationStatus = REQUEST;
+        this.grade = ProductGrade.NONE;
+        changeFileList(fileList);
+    }
+
     private void changeFileList(List<File> fileList) {
-        this.fileList = fileList;
+        if (!this.fileList.isEmpty()) {
+            this.fileList.clear();
+        }
+        this.fileList.addAll(fileList);
         for (File file : fileList) {
             file.setProduct(this);
         }
