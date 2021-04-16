@@ -1,7 +1,7 @@
 package com.toy.jeongoo.product.api.dto.response;
 
 import com.toy.jeongoo.common.Money;
-import com.toy.jeongoo.file.dto.request.FileDetailDto;
+import com.toy.jeongoo.file.dto.FileDetailDto;
 import com.toy.jeongoo.file.model.File;
 import com.toy.jeongoo.product.model.Product;
 import com.toy.jeongoo.product.model.ProductGrade;
