@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static com.toy.jeongoo.utils.ResponseMessage.*;
 import static com.toy.jeongoo.utils.StatusCode.*;
 
@@ -31,5 +34,22 @@ public class ProductFindController {
             log.error(productShowException.getMessage());
             return DefaultResponse.res(BAD_REQUEST, SHOW_PRODUCT_FAIL);
         }
+    }
+
+    @GetMapping
+    public DefaultResponse<List<ProductFindResponse>> findAllProduct() {
+        try {
+            final List<Product> productList = productFindService.findAllProduct();
+            return DefaultResponse.res(OK, SHOW_PRODUCT, toProductFindResponses(productList));
+        } catch (Exception productShowException) {
+            log.error(productShowException.getMessage());
+            return DefaultResponse.res(BAD_REQUEST, SHOW_PRODUCT_FAIL);
+        }
+    }
+
+    private List<ProductFindResponse> toProductFindResponses(List<Product> productList) {
+        return productList.stream()
+                .map(ProductFindResponse::new)
+                .collect(Collectors.toList());
     }
 }

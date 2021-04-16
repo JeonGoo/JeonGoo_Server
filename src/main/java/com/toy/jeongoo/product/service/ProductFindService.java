@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Slf4j
@@ -19,6 +20,11 @@ public class ProductFindService {
     @Transactional(readOnly = true)
     public Product findProduct(Long productId) {
         return findProductById(productId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Product> findAllProduct() {
+        return productRepository.findAll();
     }
 
     private Product findProductById(Long productId) {
