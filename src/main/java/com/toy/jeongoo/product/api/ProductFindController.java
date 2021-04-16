@@ -47,7 +47,19 @@ public class ProductFindController {
         }
     }
 
+    @GetMapping("/users/{userId}")
+    public DefaultResponse<List<ProductFindResponse>> findAllProductByUser(@PathVariable Long userId) {
+        try {
+            final List<Product> productList = productFindService.findAllProductByUser(userId);
+            return DefaultResponse.res(OK, SHOW_PRODUCT, toProductFindResponses(productList));
+        } catch (Exception productShowException) {
+            log.error(productShowException.getMessage());
+            return DefaultResponse.res(BAD_REQUEST, SHOW_PRODUCT_FAIL);
+        }
+    }
+
     private List<ProductFindResponse> toProductFindResponses(List<Product> productList) {
+        log.info(String.valueOf(productList.size()));
         return productList.stream()
                 .map(ProductFindResponse::new)
                 .collect(Collectors.toList());
