@@ -2,7 +2,6 @@ package com.toy.jeongoo.user.api;
 
 import com.toy.jeongoo.user.api.dto.request.SignInRequest;
 import com.toy.jeongoo.user.api.dto.request.SignUpRequest;
-import com.toy.jeongoo.user.api.dto.response.SignInResponse;
 import com.toy.jeongoo.user.service.LoginService;
 import com.toy.jeongoo.utils.DefaultResponse;
 import lombok.RequiredArgsConstructor;
@@ -35,10 +34,10 @@ public class UserLoginController {
     }
 
     @PostMapping("/signin")
-    public DefaultResponse<SignInResponse> signIn(@RequestBody SignInRequest signUpRequest) {
+    public DefaultResponse<Long> signIn(@RequestBody SignInRequest signUpRequest) {
         try {
-            final SignInResponse signInResponse = loginService.signIn(signUpRequest.getEmail(), signUpRequest.getPassword());
-            return DefaultResponse.res(OK, LOGIN_USER, signInResponse);
+            final Long user = loginService.signIn(signUpRequest.getEmail(), signUpRequest.getPassword());
+            return DefaultResponse.res(OK, LOGIN_USER, user);
         } catch (Exception loginException) {
             log.error(loginException.getMessage());
             return DefaultResponse.res(BAD_REQUEST, LOGIN_USER_FAIL);
