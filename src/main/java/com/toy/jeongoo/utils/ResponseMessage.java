@@ -34,4 +34,8 @@ public class ResponseMessage {
 
     public static String UPDATE_PRODUCT = "상품 수정 성공";
     public static String UPDATE_PRODUCT_FAIL = "상품 수정 실패";
+
+    public static final String DELETE_PRODUCT = "상품 삭제 성공";
+    public static final String DELETE_PRODUCT_FAIL = "상품 삭제 실패";
+
 }
