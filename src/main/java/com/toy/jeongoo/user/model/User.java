@@ -31,8 +31,7 @@ public class User {
     private Address address;
 
     @Builder
-    public User(String email, String password, String name,
-                String phoneNumber, Gender gender, Address address) {
+    public User(String email, String password, String name, String phoneNumber, Gender gender, Address address) {
         this.email = email;
         this.password = password;
         this.name = name;
