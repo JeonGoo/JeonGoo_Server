@@ -1,4 +1,4 @@
-package com.toy.jeongoo.file.dto.request;
+package com.toy.jeongoo.file.dto;
 
 import com.toy.jeongoo.file.model.File;
 import com.toy.jeongoo.file.model.MediaType;
