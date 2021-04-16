@@ -1,5 +1,6 @@
 package com.toy.jeongoo.product.api.dto.request;
 
+import com.toy.jeongoo.file.dto.request.FileInfoRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,5 +9,5 @@ import lombok.NoArgsConstructor;
 public class ProductRegistrationRequest {
 
     private ProductBasicInfoRequest productBasicInfoRequest;
-    private MediaInfoRequest mediaInfoRequest;
+    private FileInfoRequest fileInfoRequest;
 }

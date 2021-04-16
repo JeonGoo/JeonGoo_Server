@@ -1,6 +1,7 @@
 package com.toy.jeongoo.product.model;
 
 import com.toy.jeongoo.common.Money;
+import com.toy.jeongoo.file.model.File;
 import com.toy.jeongoo.product.model.status.CertificationStatus;
 import com.toy.jeongoo.product.model.status.UseStatus;
 import com.toy.jeongoo.user.model.User;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.toy.jeongoo.product.model.status.CertificationStatus.*;
@@ -31,6 +33,9 @@ public class Product {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "product", fetch = EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<File> fileList = new ArrayList<>();
+
     @Column(name = "name")
     private String name;
 
@@ -44,9 +49,6 @@ public class Product {
     @Column(nullable = false)
     private Money price;
 
-    @Embedded
-    private MediaInfo mediaInfo;
-
     @Enumerated(value = STRING)
     private UseStatus useStatus;
 
@@ -59,16 +61,16 @@ public class Product {
     private ProductGrade grade;
 
     public Product(String name, Long price, String serialNumber, String description, UseStatus useStatus,
-                   List<String> imagePaths, String videoPath, User user) {
+                   User user, List<File> fileList) {
         this.name = name;
-        this.price = Money.of(price);
         this.serialNumber = serialNumber;
         this.description = description;
+        this.price = Money.of(price);
         this.useStatus = useStatus;
-        this.mediaInfo = new MediaInfo(imagePaths.get(0), videoPath);
         this.certificationStatus = REQUEST;
         this.grade = ProductGrade.NONE;
         this.user = user;
+        changeFileList(fileList);
     }
 
     public void certify(ProductGrade grade) {
@@ -81,6 +83,13 @@ public class Product {
         checkAlreadyCertifyFailed();
         this.certificationStatus = FAILED;
         this.certificationFailedReason = certificationFailedReason;
+    }
+
+    private void changeFileList(List<File> fileList) {
+        this.fileList = fileList;
+        for (File file : fileList) {
+            file.setProduct(this);
+        }
     }
 
     private void checkCanCertification() {
