@@ -1,4 +1,4 @@
-package com.toy.jeongoo.user.api.dto.response;
+package com.toy.jeongoo.user.api.dto;
 
 import com.toy.jeongoo.user.api.dto.AddressDto;
 import com.toy.jeongoo.user.model.Gender;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class SignInResponse {
+public class UserDetailDto {
 
     private Long id;
     private String email;
@@ -18,7 +18,7 @@ public class SignInResponse {
     private Gender gender;
     private AddressDto address;
 
-    public SignInResponse(User user) {
+    public UserDetailDto(User user) {
         this.id = user.getId();
         this.email = user.getEmail();
         this.password = user.getPassword();
