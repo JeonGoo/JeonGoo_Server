@@ -19,4 +19,14 @@ public class ResponseMessage {
 
     public static String CERTIFICATE_PRODUCT_FAIL = "정품 인증 실패 알림 성공";
     public static String CERTIFICATE_PRODUCT_FAIL_ERROR = "정품 인증 실패 알림 오류";
+
+    public static String SHOW_PRODUCT = "상품 조회 성공";
+    public static String SHOW_PRODUCT_FAIL = "상품 조회 실패";
+
+    public static String UPDATE_PRODUCT = "상품 수정 성공";
+    public static String UPDATE_PRODUCT_FAIL = "상품 수정 실패";
+
+    public static final String DELETE_PRODUCT = "상품 삭제 성공";
+    public static final String DELETE_PRODUCT_FAIL = "상품 삭제 실패";
+
 }
