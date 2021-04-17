@@ -13,6 +13,9 @@ public class ResponseMessage {
     public static final String FIND_USER = "회원 조회 성공";
     public static final String FIND_USER_FAIL = "회원 조회 실패";
 
+    public static final String UPDATE_USER = "회원 수정 성공";
+    public static final String UPDATE_USER_FAIL = "회원 수정 실패";
+
     // product
     public static String REGISTER_PRODUCT = "상품 등록 성공";
     public static String REGISTER_PRODUCT_FAIL = "상품 등록 실패";

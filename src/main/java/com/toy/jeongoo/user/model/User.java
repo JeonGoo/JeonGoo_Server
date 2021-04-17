@@ -39,4 +39,13 @@ public class User {
         this.gender = gender;
         this.address = address;
     }
+
+    public void update(String email, String password, String name, String phoneNumber, Gender gender, Address address) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.address = address;
+    }
 }
