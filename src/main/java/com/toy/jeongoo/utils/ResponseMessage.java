@@ -16,6 +16,9 @@ public class ResponseMessage {
     public static final String UPDATE_USER = "회원 수정 성공";
     public static final String UPDATE_USER_FAIL = "회원 수정 실패";
 
+    public static final String DELETE_USER = "회원 탈퇴 성공";
+    public static final String DELETE_USER_FAIL = "회원 탈퇴 실패";
+
     // product
     public static String REGISTER_PRODUCT = "상품 등록 성공";
     public static String REGISTER_PRODUCT_FAIL = "상품 등록 실패";
