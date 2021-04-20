@@ -1,6 +1,6 @@
 package com.toy.jeongoo.file.model;
 
-public enum MediaType {
+public enum FileType {
     IMAGE,
     VIDEO
 }

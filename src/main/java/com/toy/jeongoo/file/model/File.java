@@ -22,16 +22,16 @@ public class File {
     private String path;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "media_type")
-    private MediaType mediaType;
+    @Column(name = "file_type")
+    private FileType fileType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public File(String path, MediaType mediaType) {
+    public File(String path, FileType fileType) {
         this.path = path;
-        this.mediaType = mediaType;
+        this.fileType = fileType;
     }
 
     public void setProduct(Product product) {
