@@ -1,7 +1,7 @@
 package com.toy.jeongoo.file.service;
 
 import com.toy.jeongoo.file.model.File;
-import com.toy.jeongoo.file.model.MediaType;
+import com.toy.jeongoo.file.model.FileType;
 import com.toy.jeongoo.file.repository.FileRepository;
 import com.toy.jeongoo.file.dto.request.FileInfoRequest;
 import com.toy.jeongoo.file.service.upload.FileUploadService;
@@ -29,9 +29,9 @@ public class FileService {
     private List<File> createFileList(FileInfoRequest fileInfoRequest) {
         List<File> imageFileList = fileInfoRequest.getImageFiles().stream()
                 .map(fileUploadService::upload)
-                .map(uploadedFile -> new File(uploadedFile, MediaType.IMAGE))
+                .map(uploadedFile -> new File(uploadedFile, FileType.IMAGE))
                 .collect(Collectors.toList());
-        File videoFile = new File(fileUploadService.upload(fileInfoRequest.getVideoFile()), MediaType.VIDEO);
+        File videoFile = new File(fileUploadService.upload(fileInfoRequest.getVideoFile()), FileType.VIDEO);
 
         imageFileList.add(videoFile);
         return imageFileList;
