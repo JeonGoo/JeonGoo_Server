@@ -99,7 +99,7 @@ public class Product {
 
     private void checkGradeIsNotNone(ProductGrade grade) {
         if (grade.equals(ProductGrade.NONE)) {
-            throw new IllegalArgumentException("product grade shoud not be none!");
+            throw new IllegalArgumentException("product grade should not be none!");
         }
     }
 
