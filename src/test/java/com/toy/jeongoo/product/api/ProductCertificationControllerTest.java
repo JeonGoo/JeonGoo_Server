@@ -59,7 +59,6 @@ class ProductCertificationControllerTest {
         //given
         ProductCertificationRequest certificationRequest = new ProductCertificationRequest(ProductGrade.HIGH);
         final String certificationRequestString = objectMapper.writeValueAsString(certificationRequest);
-        System.out.println(certificationRequestString);
 
         //then
         mockMvc.perform(put("/api/v1/products/" + product.getId() + "/certification")
