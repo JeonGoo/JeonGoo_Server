@@ -4,6 +4,7 @@ import com.toy.jeongoo.product.model.Product;
 import com.toy.jeongoo.product.repository.ProductRepository;
 import com.toy.jeongoo.user.model.User;
 import com.toy.jeongoo.user.repository.UserRepository;
+import com.toy.jeongoo.user.service.UserFindService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ import java.util.NoSuchElementException;
 public class ProductFindService {
 
     private final ProductRepository productRepository;
-    private final UserRepository userRepository;
+    private final UserFindService userFindService;
 
     @Transactional(readOnly = true)
     public Product findProduct(Long productId) {
@@ -32,17 +33,12 @@ public class ProductFindService {
 
     @Transactional(readOnly = true)
     public List<Product> findAllProductByUser(Long userId) {
-        final User user = findUserById(userId);
+        final User user = userFindService.findUser(userId);
         return productRepository.findAllByUser(user);
     }
 
     private Product findProductById(Long productId) {
         return productRepository.findById(productId)
                 .orElseThrow(() -> new NoSuchElementException(String.format("not found product. input id: %d", productId)));
-    }
-
-    private User findUserById(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchElementException(String.format("not found user. input id: %d", userId)));
     }
 }
