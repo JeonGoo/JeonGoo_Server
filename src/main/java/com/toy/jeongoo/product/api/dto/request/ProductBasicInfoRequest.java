@@ -13,4 +13,12 @@ public class ProductBasicInfoRequest {
     private String serialNumber;
     private String description;
     private UseStatus useStatus;
+
+    public ProductBasicInfoRequest(String name, Long price, String serialNumber, String description, UseStatus useStatus) {
+        this.name = name;
+        this.price = price;
+        this.serialNumber = serialNumber;
+        this.description = description;
+        this.useStatus = useStatus;
+    }
 }
