@@ -75,6 +75,7 @@ public class Product {
 
     public void certify(ProductGrade grade) {
         checkCanCertification();
+        checkGradeIsNotNone(grade);
         this.certificationStatus = COMPLETED;
         this.grade = grade;
     }
@@ -94,6 +95,12 @@ public class Product {
         this.certificationStatus = REQUEST;
         this.grade = ProductGrade.NONE;
         changeFileList(fileList);
+    }
+
+    private void checkGradeIsNotNone(ProductGrade grade) {
+        if (grade.equals(ProductGrade.NONE)) {
+            throw new IllegalArgumentException("product grade should not be none!");
+        }
     }
 
     private void changeFileList(List<File> fileList) {
