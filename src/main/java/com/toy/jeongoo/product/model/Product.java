@@ -103,6 +103,7 @@ public class Product {
         changeFileList(fileList);
     }
 
+
     public boolean isSoldOut() {
         return this.salesStatus.equals(SOLD_OUT);
     }

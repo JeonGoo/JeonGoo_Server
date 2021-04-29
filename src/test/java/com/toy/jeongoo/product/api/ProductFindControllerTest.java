@@ -69,6 +69,7 @@ class ProductFindControllerTest {
 
         //then
         assertThat(resultValue.getData().getProductDetailDto().getId()).isEqualTo(productId);
+
     }
 
     @ParameterizedTest
@@ -85,7 +86,7 @@ class ProductFindControllerTest {
         final MvcResult mvcResult = mockMvc.perform(get("/api/v1/products"))
                 .andExpect(status().isOk())
                 .andReturn();
-        final DefaultResponse<List<ProductShowResponse>> resultValues = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<DefaultResponse<List<ProductShowResponse>>>() {
+        final DefaultResponse<ProductShowResponse> resultValue = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<DefaultResponse<ProductShowResponse>>() {
         });
 
         //then
@@ -106,7 +107,7 @@ class ProductFindControllerTest {
         final MvcResult mvcResult = mockMvc.perform(get("/api/v1/products/users/" + user.getId()))
                 .andExpect(status().isOk())
                 .andReturn();
-        final DefaultResponse<List<ProductShowResponse>> resultValues = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<DefaultResponse<List<ProductShowResponse>>>() {
+        final DefaultResponse<ProductShowResponse> resultValue = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<DefaultResponse<ProductShowResponse>>() {
         });
 
         //then
