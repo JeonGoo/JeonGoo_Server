@@ -6,6 +6,7 @@ import com.toy.jeongoo.file.model.File;
 import com.toy.jeongoo.product.model.Product;
 import com.toy.jeongoo.product.model.ProductGrade;
 import com.toy.jeongoo.product.model.status.CertificationStatus;
+import com.toy.jeongoo.product.model.status.SalesStatus;
 import com.toy.jeongoo.product.model.status.UseStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class ProductFindResponse {
     private CertificationStatus certificationStatus;
     private String certificationFailedReason;
     private ProductGrade productGrade;
+    private SalesStatus salesStatus;
     private List<FileDetailDto> fileList;
 
     public ProductFindResponse(Product product) {
@@ -36,6 +38,7 @@ public class ProductFindResponse {
         this.certificationStatus = product.getCertificationStatus();
         this.certificationFailedReason = product.getCertificationFailedReason();
         this.productGrade = product.getGrade();
+        this.salesStatus = product.getSalesStatus();
         this.fileList = createdFileList(product.getFileList());
     }
 
