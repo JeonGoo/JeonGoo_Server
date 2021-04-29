@@ -1,6 +1,6 @@
 package com.toy.jeongoo.product.api;
 
-import com.toy.jeongoo.product.api.dto.response.ProductFindResponse;
+import com.toy.jeongoo.product.api.dto.response.ProductShowResponse;
 import com.toy.jeongoo.product.model.Product;
 import com.toy.jeongoo.product.service.ProductFindService;
 import com.toy.jeongoo.utils.DefaultResponse;
@@ -26,10 +26,10 @@ public class ProductFindController {
     private final ProductFindService productFindService;
 
     @GetMapping("/{productId}")
-    public DefaultResponse<ProductFindResponse> findProduct(@PathVariable Long productId) {
+    public DefaultResponse<ProductShowResponse> findProduct(@PathVariable Long productId) {
         try {
             final Product product = productFindService.findProduct(productId);
-            return DefaultResponse.res(OK, SHOW_PRODUCT, new ProductFindResponse(product));
+            return DefaultResponse.res(OK, SHOW_PRODUCT, new ProductShowResponse(product));
         } catch (Exception productShowException) {
             log.error(productShowException.getMessage());
             return DefaultResponse.res(BAD_REQUEST, SHOW_PRODUCT_FAIL);
@@ -37,10 +37,10 @@ public class ProductFindController {
     }
 
     @GetMapping
-    public DefaultResponse<List<ProductFindResponse>> findAllProduct() {
+    public DefaultResponse<List<ProductShowResponse>> findAllProduct() {
         try {
             final List<Product> productList = productFindService.findAllProduct();
-            return DefaultResponse.res(OK, SHOW_PRODUCT, toProductFindResponses(productList));
+            return DefaultResponse.res(OK, SHOW_PRODUCT, toProductShowResponses(productList));
         } catch (Exception productShowException) {
             log.error(productShowException.getMessage());
             return DefaultResponse.res(BAD_REQUEST, SHOW_PRODUCT_FAIL);
@@ -48,20 +48,19 @@ public class ProductFindController {
     }
 
     @GetMapping("/users/{userId}")
-    public DefaultResponse<List<ProductFindResponse>> findAllProductByUser(@PathVariable Long userId) {
+    public DefaultResponse<List<ProductShowResponse>> findAllProductByUser(@PathVariable Long userId) {
         try {
             final List<Product> productList = productFindService.findAllProductByUser(userId);
-            return DefaultResponse.res(OK, SHOW_PRODUCT, toProductFindResponses(productList));
+            return DefaultResponse.res(OK, SHOW_PRODUCT, toProductShowResponses(productList));
         } catch (Exception productShowException) {
             log.error(productShowException.getMessage());
             return DefaultResponse.res(BAD_REQUEST, SHOW_PRODUCT_FAIL);
         }
     }
 
-    private List<ProductFindResponse> toProductFindResponses(List<Product> productList) {
-        log.info(String.valueOf(productList.size()));
+    private List<ProductShowResponse> toProductShowResponses(List<Product> productList) {
         return productList.stream()
-                .map(ProductFindResponse::new)
+                .map(ProductShowResponse::new)
                 .collect(Collectors.toList());
     }
 }
