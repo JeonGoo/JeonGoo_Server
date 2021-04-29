@@ -1,6 +1,5 @@
 package com.toy.jeongoo.product.api.dto.response;
 
-import com.toy.jeongoo.common.Money;
 import com.toy.jeongoo.file.dto.FileDetailDto;
 import com.toy.jeongoo.file.model.File;
 import com.toy.jeongoo.product.model.Product;
@@ -16,12 +15,12 @@ import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
-public class ProductFindResponse {
+public class ProductDetailDto {
 
     private Long id;
     private String name;
     private String description;
-    private Money price;
+    private Long price;
     private UseStatus useStatus;
     private CertificationStatus certificationStatus;
     private String certificationFailedReason;
@@ -29,11 +28,11 @@ public class ProductFindResponse {
     private SalesStatus salesStatus;
     private List<FileDetailDto> fileList;
 
-    public ProductFindResponse(Product product) {
+    public ProductDetailDto(Product product) {
         this.id = product.getId();
         this.name = product.getName();
         this.description = product.getDescription();
-        this.price = product.getPrice();
+        this.price = product.getPrice().getValue();
         this.useStatus = product.getUseStatus();
         this.certificationStatus = product.getCertificationStatus();
         this.certificationFailedReason = product.getCertificationFailedReason();
