@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.toy.jeongoo.product.model.QProduct.*;
 
@@ -22,6 +23,23 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
         return queryFactory
                 .selectFrom(product)
                 .where(eqUser(user))
+                .fetch();
+    }
+
+    @Override
+    public Optional<Product> findByIdWithUser(Long productId) {
+        return Optional.ofNullable(queryFactory
+                .selectFrom(product)
+                .innerJoin(product.user).fetchJoin()
+                .where(product.id.eq(productId))
+                .fetchOne());
+    }
+
+    @Override
+    public List<Product> findAllWithUser() {
+        return queryFactory
+                .selectFrom(product)
+                .innerJoin(product.user).fetchJoin()
                 .fetch();
     }
 

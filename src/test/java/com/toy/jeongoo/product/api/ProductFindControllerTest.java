@@ -2,7 +2,8 @@ package com.toy.jeongoo.product.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.toy.jeongoo.product.api.dto.response.ProductFindResponse;
+import com.toy.jeongoo.product.api.dto.response.ProductDetailDto;
+import com.toy.jeongoo.product.api.dto.response.ProductShowResponse;
 import com.toy.jeongoo.product.model.Product;
 import com.toy.jeongoo.product.model.status.UseStatus;
 import com.toy.jeongoo.product.repository.ProductRepository;
@@ -63,11 +64,12 @@ class ProductFindControllerTest {
         final MvcResult mvcResult = mockMvc.perform(get("/api/v1/products/" + productId))
                 .andExpect(status().isOk())
                 .andReturn();
-        final DefaultResponse<ProductFindResponse> resultValue = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<DefaultResponse<ProductFindResponse>>() {
+        final DefaultResponse<ProductShowResponse> resultValue = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<DefaultResponse<ProductShowResponse>>() {
         });
 
         //then
-        assertThat(resultValue.getData().getId()).isEqualTo(productId);
+        assertThat(resultValue.getData().getProductDetailDto().getId()).isEqualTo(productId);
+
     }
 
     @ParameterizedTest
@@ -84,7 +86,7 @@ class ProductFindControllerTest {
         final MvcResult mvcResult = mockMvc.perform(get("/api/v1/products"))
                 .andExpect(status().isOk())
                 .andReturn();
-        final DefaultResponse<List<ProductFindResponse>> resultValues = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<DefaultResponse<List<ProductFindResponse>>>() {
+        final DefaultResponse<ProductShowResponse> resultValue = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<DefaultResponse<ProductShowResponse>>() {
         });
 
         //then
@@ -105,7 +107,7 @@ class ProductFindControllerTest {
         final MvcResult mvcResult = mockMvc.perform(get("/api/v1/products/users/" + user.getId()))
                 .andExpect(status().isOk())
                 .andReturn();
-        final DefaultResponse<List<ProductFindResponse>> resultValues = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<DefaultResponse<List<ProductFindResponse>>>() {
+        final DefaultResponse<ProductShowResponse> resultValue = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<DefaultResponse<ProductShowResponse>>() {
         });
 
         //then

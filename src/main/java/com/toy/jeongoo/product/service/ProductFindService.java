@@ -23,12 +23,12 @@ public class ProductFindService {
 
     @Transactional(readOnly = true)
     public Product findProduct(Long productId) {
-        return findProductById(productId);
+        return findProductByIdWithUser(productId);
     }
 
     @Transactional(readOnly = true)
     public List<Product> findAllProduct() {
-        return productRepository.findAll();
+        return productRepository.findAllWithUser();
     }
 
     @Transactional(readOnly = true)
@@ -37,8 +37,8 @@ public class ProductFindService {
         return productRepository.findAllByUser(user);
     }
 
-    private Product findProductById(Long productId) {
-        return productRepository.findById(productId)
+    private Product findProductByIdWithUser(Long productId) {
+        return productRepository.findByIdWithUser(productId)
                 .orElseThrow(() -> new NoSuchElementException(String.format("not found product. input id: %d", productId)));
     }
 }
