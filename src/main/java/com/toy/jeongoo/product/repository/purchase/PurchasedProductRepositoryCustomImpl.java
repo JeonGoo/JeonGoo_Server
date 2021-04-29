@@ -2,6 +2,7 @@ package com.toy.jeongoo.product.repository.purchase;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.toy.jeongoo.product.model.purchased.PurchasedProduct;
+import com.toy.jeongoo.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -16,11 +17,20 @@ public class PurchasedProductRepositoryCustomImpl implements PurchasedProductRep
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<PurchasedProduct> findAllWithProductAndPurchasedUser() {
+    public List<PurchasedProduct> findAllByPurchasedUserWithProductAndPurchasedUser() {
         return queryFactory
                 .selectFrom(purchasedProduct)
                 .innerJoin(purchasedProduct.product).fetchJoin()
                 .innerJoin(purchasedProduct.purchasedUser).fetchJoin()
+                .fetch();
+    }
+
+    @Override
+    public List<PurchasedProduct> findAllByPurchasedUserWithProduct(User purchasedUser) {
+        return queryFactory
+                .selectFrom(purchasedProduct)
+                .innerJoin(purchasedProduct.product).fetchJoin()
+                .where(purchasedProduct.purchasedUser.eq(purchasedUser))
                 .fetch();
     }
 }

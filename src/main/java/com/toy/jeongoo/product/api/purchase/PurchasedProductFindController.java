@@ -7,6 +7,7 @@ import com.toy.jeongoo.utils.DefaultResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +30,18 @@ public class PurchasedProductFindController {
         try {
             final List<PurchasedProduct> purchasedProductList = purchasedProductFindService.findPurchasedProducts();
             return DefaultResponse.res(OK, SHOW_PRODUCT, toProductShowResponses(purchasedProductList));
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return DefaultResponse.res(BAD_REQUEST, SHOW_PRODUCT_FAIL);
+        }
+    }
+
+    @GetMapping("/users/{purchasedUserId}")
+    public DefaultResponse<List<ProductShowResponse>> findAllPurchasedProductByPurchasedUser(@PathVariable Long purchasedUserId) {
+        try {
+            final List<PurchasedProduct> purchasedProductList = purchasedProductFindService.findAllPurchasedProductByPurchasedUser(purchasedUserId);
+            final List<ProductShowResponse> productShowResponses = toProductShowResponses(purchasedProductList);
+            return DefaultResponse.res(OK, SHOW_PRODUCT, productShowResponses);
         } catch (Exception e) {
             log.error(e.getMessage());
             return DefaultResponse.res(BAD_REQUEST, SHOW_PRODUCT_FAIL);
