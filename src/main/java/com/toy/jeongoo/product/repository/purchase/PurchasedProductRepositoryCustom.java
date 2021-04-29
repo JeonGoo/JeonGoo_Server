@@ -9,4 +9,6 @@ public interface PurchasedProductRepositoryCustom {
     List<PurchasedProduct> findAllByPurchasedUserWithProductAndPurchasedUser();
 
     List<PurchasedProduct> findAllByPurchasedUserWithProduct(User purchasedUser);
+
+    List<PurchasedProduct> findAllBySaleUserWithProduct(User saleUser);
 }

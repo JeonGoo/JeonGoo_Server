@@ -26,4 +26,9 @@ public class PurchasedProductFindService {
         final User purchasedUser = userFindService.findUser(purchasedUserId);
         return purchasedProductRepository.findAllByPurchasedUserWithProduct(purchasedUser);
     }
+
+    public List<PurchasedProduct> findAllPurchasedProductBySaleUser(Long saleUserId) {
+        final User saleUser = userFindService.findUser(saleUserId);
+        return purchasedProductRepository.findAllBySaleUserWithProduct(saleUser);
+    }
 }

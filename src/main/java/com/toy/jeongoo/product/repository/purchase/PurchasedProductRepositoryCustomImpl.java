@@ -33,4 +33,13 @@ public class PurchasedProductRepositoryCustomImpl implements PurchasedProductRep
                 .where(purchasedProduct.purchasedUser.eq(purchasedUser))
                 .fetch();
     }
+
+    @Override
+    public List<PurchasedProduct> findAllBySaleUserWithProduct(User saleUser) {
+        return queryFactory
+                .selectFrom(purchasedProduct)
+                .innerJoin(purchasedProduct.product).fetchJoin()
+                .where(purchasedProduct.product.user.eq(saleUser))
+                .fetch();
+    }
 }

@@ -36,10 +36,22 @@ public class PurchasedProductFindController {
         }
     }
 
-    @GetMapping("/users/{purchasedUserId}")
-    public DefaultResponse<List<ProductShowResponse>> findAllPurchasedProductByPurchasedUser(@PathVariable Long purchasedUserId) {
+    @GetMapping("/users/{userId}/purchased")
+    public DefaultResponse<List<ProductShowResponse>> findAllPurchasedProductByPurchasedUser(@PathVariable Long userId) {
         try {
-            final List<PurchasedProduct> purchasedProductList = purchasedProductFindService.findAllPurchasedProductByPurchasedUser(purchasedUserId);
+            final List<PurchasedProduct> purchasedProductList = purchasedProductFindService.findAllPurchasedProductByPurchasedUser(userId);
+            final List<ProductShowResponse> productShowResponses = toProductShowResponses(purchasedProductList);
+            return DefaultResponse.res(OK, SHOW_PRODUCT, productShowResponses);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return DefaultResponse.res(BAD_REQUEST, SHOW_PRODUCT_FAIL);
+        }
+    }
+
+    @GetMapping("/users/{userId}/sell")
+    public DefaultResponse<List<ProductShowResponse>> findAllPurchasedProductBySaleUser(@PathVariable Long userId) {
+        try {
+            final List<PurchasedProduct> purchasedProductList = purchasedProductFindService.findAllPurchasedProductBySaleUser(userId);
             final List<ProductShowResponse> productShowResponses = toProductShowResponses(purchasedProductList);
             return DefaultResponse.res(OK, SHOW_PRODUCT, productShowResponses);
         } catch (Exception e) {
