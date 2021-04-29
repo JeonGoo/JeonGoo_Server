@@ -18,7 +18,7 @@ public class PurchasedProduct {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "purchase_product_id")
+    @Column(name = "purchased_product_id")
     private Long id;
 
     @OneToOne(fetch = LAZY)
