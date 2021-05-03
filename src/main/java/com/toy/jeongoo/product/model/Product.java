@@ -3,6 +3,7 @@ package com.toy.jeongoo.product.model;
 import com.toy.jeongoo.common.Money;
 import com.toy.jeongoo.file.model.File;
 import com.toy.jeongoo.product.model.status.CertificationStatus;
+import com.toy.jeongoo.product.model.status.SalesStatus;
 import com.toy.jeongoo.product.model.status.UseStatus;
 import com.toy.jeongoo.user.model.User;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.toy.jeongoo.product.model.status.CertificationStatus.*;
+import static com.toy.jeongoo.product.model.status.SalesStatus.*;
 import static javax.persistence.EnumType.*;
 import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
@@ -55,6 +57,9 @@ public class Product {
     @Enumerated(value = STRING)
     private CertificationStatus certificationStatus;
 
+    @Enumerated(value = STRING)
+    private SalesStatus salesStatus;
+
     private String certificationFailedReason;
 
     @Enumerated(value = STRING)
@@ -70,11 +75,13 @@ public class Product {
         this.certificationStatus = REQUEST;
         this.grade = ProductGrade.NONE;
         this.user = user;
+        this.salesStatus = SALE;
         changeFileList(fileList);
     }
 
     public void certify(ProductGrade grade) {
         checkCanCertification();
+        checkGradeIsNotNone(grade);
         this.certificationStatus = COMPLETED;
         this.grade = grade;
     }
@@ -94,6 +101,21 @@ public class Product {
         this.certificationStatus = REQUEST;
         this.grade = ProductGrade.NONE;
         changeFileList(fileList);
+    }
+
+
+    public boolean isSoldOut() {
+        return this.salesStatus.equals(SOLD_OUT);
+    }
+
+    public void soldOut() {
+        this.salesStatus = SOLD_OUT;
+    }
+
+    private void checkGradeIsNotNone(ProductGrade grade) {
+        if (grade.equals(ProductGrade.NONE)) {
+            throw new IllegalArgumentException("product grade should not be none!");
+        }
     }
 
     private void changeFileList(List<File> fileList) {

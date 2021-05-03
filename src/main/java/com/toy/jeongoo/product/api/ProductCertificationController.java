@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 import static com.toy.jeongoo.utils.ResponseMessage.*;
 import static com.toy.jeongoo.utils.ResponseMessage.CERTIFICATE_PRODUCT_FAIL_ERROR;
 import static com.toy.jeongoo.utils.StatusCode.BAD_REQUEST;
@@ -23,7 +25,7 @@ public class ProductCertificationController {
 
     @PutMapping("/{productId}/certification")
     public DefaultResponse<Long> certify(@PathVariable Long productId,
-                                         @RequestBody ProductCertificationRequest certificationRequest) {
+                                         @Valid @RequestBody ProductCertificationRequest certificationRequest) {
         try {
             final Long certificationProduct = certificationService.certify(productId, certificationRequest);
             return DefaultResponse.res(OK, CERTIFICATE_PRODUCT, certificationProduct);

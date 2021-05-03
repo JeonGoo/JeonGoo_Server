@@ -10,4 +10,9 @@ public class ProductRegistrationRequest {
 
     private ProductBasicInfoRequest productBasicInfoRequest;
     private FileInfoRequest fileInfoRequest;
+
+    public ProductRegistrationRequest(ProductBasicInfoRequest productBasicInfoRequest, FileInfoRequest fileInfoRequest) {
+        this.productBasicInfoRequest = productBasicInfoRequest;
+        this.fileInfoRequest = fileInfoRequest;
+    }
 }
