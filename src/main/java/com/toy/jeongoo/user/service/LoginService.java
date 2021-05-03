@@ -7,6 +7,7 @@ import com.toy.jeongoo.user.model.User;
 import com.toy.jeongoo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class LoginService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public Long signUp(SignUpRequest signUpRequest) {
@@ -24,7 +26,7 @@ public class LoginService {
         final Address address = new Address(addressDto.getCity(), addressDto.getDetailed());
         User user = User.builder()
                 .email(signUpRequest.getEmail())
-                .password(signUpRequest.getPassword())
+                .password(passwordEncoder.encode(signUpRequest.getPassword()))
                 .name(signUpRequest.getName())
                 .gender(signUpRequest.getGender())
                 .phoneNumber(signUpRequest.getPhoneNumber())
@@ -32,12 +34,6 @@ public class LoginService {
                 .build();
         userRepository.save(user);
 
-        return user.getId();
-    }
-
-    @Transactional(readOnly = true)
-    public Long signIn(String email, String password) {
-        final User user = findUserByEmailAndPassword(email, password);
         return user.getId();
     }
 
