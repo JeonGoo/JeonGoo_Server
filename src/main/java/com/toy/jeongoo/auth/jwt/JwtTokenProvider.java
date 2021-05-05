@@ -9,9 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
 import java.util.Date;
 
 @Component
@@ -20,12 +18,6 @@ public class JwtTokenProvider {
 
     private final JwtProperties jwtProperties;
     private final UserDetailsService userDetailsService;
-    private String secretKey = "";
-
-    @PostConstruct
-    protected void init() {
-        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
-    }
 
     public String createToken(String userPK) {
         Claims claims = Jwts.claims().setSubject(userPK);
@@ -52,13 +44,18 @@ public class JwtTokenProvider {
     }
 
     public String decodeToken(HttpServletRequest request) {
-        return request.getHeader("X-AUTH-TOKEN");
+        final String requestTokenHeader = request.getHeader("Authorization");
+        String token = null;
+        if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer")) {
+            token = requestTokenHeader.substring(7);
+        }
+        return token;
     }
 
     public boolean isValidate(String token) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(jwtProperties.getKey()).parseClaimsJws(token);
-            return claims.getBody().getExpiration().before(new Date());
+            return !claims.getBody().getExpiration().before(new Date());
         } catch (ExpiredJwtException e) {
             return false;
         }
