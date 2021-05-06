@@ -21,7 +21,7 @@ public class InterestProduct {
     @Column(name = "interest_product_id")
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 
