@@ -27,5 +27,10 @@ public class InterestProduct {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private User interestedUser;
+
+    public InterestProduct(Product product, User interestedUser) {
+        this.product = product;
+        this.interestedUser = interestedUser;
+    }
 }
