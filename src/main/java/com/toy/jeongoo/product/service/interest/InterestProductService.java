@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class InterestProductService {
@@ -26,5 +28,11 @@ public class InterestProductService {
 
         interestProductRepository.save(interestProduct);
         return interestProduct.getId();
+    }
+
+    @Transactional(readOnly = true)
+    public List<InterestProduct> findAllByInterestedUser(Long interestedUserId) {
+        final User interestedUser = userFindService.findUser(interestedUserId);
+        return interestProductRepository.findAllByInterestedUser(interestedUser);
     }
 }
