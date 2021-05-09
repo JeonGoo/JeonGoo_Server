@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -34,5 +35,21 @@ public class InterestProductService {
     public List<InterestProduct> findAllByInterestedUser(Long interestedUserId) {
         final User interestedUser = userFindService.findUser(interestedUserId);
         return interestProductRepository.findAllByInterestedUser(interestedUser);
+    }
+
+    @Transactional
+    public Long cancel(Long interestProductId, Long interestedUserId) {
+        final InterestProduct interestProduct = findInterestProductById(interestProductId);
+        final User user = userFindService.findUser(interestedUserId);
+        if (!interestProduct.isRegisteredUser(user)) {
+            throw new IllegalArgumentException("user is not registered as a product of interest.");
+        }
+        interestProductRepository.delete(interestProduct);
+        return interestProduct.getId();
+    }
+
+    private InterestProduct findInterestProductById(Long interestProductId) {
+        return interestProductRepository.findById(interestProductId)
+                .orElseThrow(() -> new NoSuchElementException(String.format("not found interest product. interestProductId : %d", interestProductId)));
     }
 }

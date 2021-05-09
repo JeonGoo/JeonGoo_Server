@@ -45,6 +45,18 @@ public class InterestProductController {
         }
     }
 
+    @DeleteMapping("/{interestProductId}/users/{interestedUserId}")
+    public DefaultResponse<Long> cancelInterestProduct(@PathVariable Long interestProductId,
+                                                       @PathVariable Long interestedUserId) {
+        try {
+            Long cancelledInterestProductId = interestProductService.cancel(interestProductId, interestedUserId);
+            return DefaultResponse.res(OK, CANCEL_INTEREST_PRODUCT, cancelledInterestProductId);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return DefaultResponse.res(BAD_REQUEST, CANCEL_INTEREST_PRODUCT_FAIL);
+        }
+    }
+
     private List<ProductShowResponse> toProductShowResponses(List<InterestProduct> interestProductList) {
         return interestProductList.stream()
                 .map(p -> new ProductShowResponse(p.getProduct()))

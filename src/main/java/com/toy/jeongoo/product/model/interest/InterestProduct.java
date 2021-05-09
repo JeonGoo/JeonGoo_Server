@@ -33,4 +33,8 @@ public class InterestProduct {
         this.product = product;
         this.interestedUser = interestedUser;
     }
+
+    public boolean isRegisteredUser(User user) {
+        return this.interestedUser.equals(user);
+    }
 }
