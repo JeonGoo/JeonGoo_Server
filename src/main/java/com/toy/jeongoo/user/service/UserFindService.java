@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +24,10 @@ public class UserFindService {
     public User findByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(email));
+    }
+
+    public Optional<User> findByEmailOptional(String email) {
+        return userRepository.findByEmail(email);
     }
 
     private User findUserById(Long userId) {
