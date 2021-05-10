@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 import static javax.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
@@ -19,9 +20,17 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
+    @Email
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
+
+    @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
     @Enumerated(value = EnumType.STRING)

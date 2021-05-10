@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 import static com.toy.jeongoo.utils.ResponseMessage.*;
 import static com.toy.jeongoo.utils.StatusCode.*;
 
@@ -20,7 +22,7 @@ public class UserUpdateController {
 
     @PutMapping("{userId}")
     public DefaultResponse<Long> update(@PathVariable Long userId,
-                                        @RequestBody UserUpdateRequest updateRequest) {
+                                        @Valid @RequestBody UserUpdateRequest updateRequest) {
         try {
             final Long updatedUserId = userUpdateService.update(userId, updateRequest);
             return DefaultResponse.res(OK, UPDATE_USER, updatedUserId);
