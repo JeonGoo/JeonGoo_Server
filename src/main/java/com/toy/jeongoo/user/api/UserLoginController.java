@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 import static com.toy.jeongoo.utils.ResponseMessage.*;
 import static com.toy.jeongoo.utils.StatusCode.*;
 
@@ -24,7 +26,7 @@ public class UserLoginController {
     private final LoginService loginService;
 
     @PostMapping("/signup")
-    public DefaultResponse<Long> signUp(@RequestBody SignUpRequest signUpRequest) {
+    public DefaultResponse<Long> signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
         try {
             final Long signUpNumber = loginService.signUp(signUpRequest);
             return DefaultResponse.res(CREATED, CREATE_USER, signUpNumber);
@@ -35,7 +37,7 @@ public class UserLoginController {
     }
 
     @PostMapping("/signin")
-    public DefaultResponse<SignInResponse> signIn(@RequestBody SignInRequest signUpRequest) {
+    public DefaultResponse<SignInResponse> signIn(@Valid @RequestBody SignInRequest signUpRequest) {
         try {
             final SignInResponse signInResponse = loginService.signIn(signUpRequest);
             return DefaultResponse.res(OK, LOGIN_USER, signInResponse);
