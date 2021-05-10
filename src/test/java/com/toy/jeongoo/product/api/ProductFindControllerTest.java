@@ -12,9 +12,7 @@ import com.toy.jeongoo.user.model.Gender;
 import com.toy.jeongoo.user.model.User;
 import com.toy.jeongoo.user.repository.UserRepository;
 import com.toy.jeongoo.utils.DefaultResponse;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,13 +49,20 @@ class ProductFindControllerTest {
 
     @BeforeEach
     public void setUp() {
-        init();
+        saveUser();
+    }
+
+    @AfterEach
+    public void teardown() {
+        productRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
     @DisplayName("상품 아이디로 해당 상품을 조회한다.")
     public void findProductTest() throws Exception {
         //given
+        saveProduct();
         long productId = product.getId();
 
         //when
@@ -77,7 +82,6 @@ class ProductFindControllerTest {
     @CsvSource("2,3")
     public void findAllProductsTest(int size) throws Exception {
         //given
-        productRepository.deleteAll();
         for (int cnt = 0; cnt < size; cnt++) {
             saveProduct();
         }
@@ -86,8 +90,9 @@ class ProductFindControllerTest {
         final MvcResult mvcResult = mockMvc.perform(get("/api/v1/products"))
                 .andExpect(status().isOk())
                 .andReturn();
-        final DefaultResponse<ProductShowResponse> resultValue = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<DefaultResponse<ProductShowResponse>>() {
-        });
+        final DefaultResponse<List<ProductShowResponse>> resultValues = objectMapper.readValue(mvcResult.getResponse().getContentAsString(),
+                new TypeReference<DefaultResponse<List<ProductShowResponse>>>() {
+                });
 
         //then
         assertThat(resultValues.getData().size()).isEqualTo(size);
@@ -98,7 +103,6 @@ class ProductFindControllerTest {
     @CsvSource("2,3")
     public void findAllProductsByUser(int size) throws Exception {
         //given
-        productRepository.deleteAll();
         for (int cnt = 0; cnt < size; cnt++) {
             saveProduct();
         }
@@ -107,16 +111,12 @@ class ProductFindControllerTest {
         final MvcResult mvcResult = mockMvc.perform(get("/api/v1/products/users/" + user.getId()))
                 .andExpect(status().isOk())
                 .andReturn();
-        final DefaultResponse<ProductShowResponse> resultValue = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<DefaultResponse<ProductShowResponse>>() {
-        });
+        final DefaultResponse<List<ProductShowResponse>> resultValues = objectMapper.readValue(mvcResult.getResponse().getContentAsString(),
+                new TypeReference<DefaultResponse<List<ProductShowResponse>>>() {
+                });
 
         //then
         assertThat(resultValues.getData().size()).isEqualTo(size);
-    }
-
-    private void init() {
-        saveUser();
-        saveProduct();
     }
 
     private void saveUser() {
