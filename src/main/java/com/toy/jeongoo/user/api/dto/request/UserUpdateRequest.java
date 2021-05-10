@@ -29,4 +29,14 @@ public class UserUpdateRequest {
 
     @NotNull(message = "주소를 입력해줘야 합니다.")
     private AddressDto addressDto;
+
+    public UserUpdateRequest(String email, String password, String name,
+                             Gender gender, String phoneNumber, AddressDto addressDto) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+        this.addressDto = addressDto;
+    }
 }
