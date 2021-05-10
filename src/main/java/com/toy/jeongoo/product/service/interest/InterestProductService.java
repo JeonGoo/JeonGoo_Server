@@ -37,6 +37,12 @@ public class InterestProductService {
         return interestProductRepository.findAllByInterestedUser(interestedUser);
     }
 
+    @Transactional(readOnly = true)
+    public Long findInterestProductCountByProduct(Long productId) {
+        final Product product = productFindService.findProduct(productId);
+        return interestProductRepository.findCountByProduct(product);
+    }
+
     @Transactional
     public Long cancel(Long interestProductId, Long interestedUserId) {
         final InterestProduct interestProduct = findInterestProductById(interestProductId);

@@ -30,4 +30,12 @@ public class InterestProductRepositoryCustomImpl implements InterestProductRepos
                 .where(interestProduct.interestedUser.eq(interestedUser))
                 .fetch();
     }
+
+    @Override
+    public Long findCountByProduct(Product product) {
+        return queryFactory
+                .selectFrom(interestProduct)
+                .where(interestProduct.product.eq(product))
+                .fetchCount();
+    }
 }
