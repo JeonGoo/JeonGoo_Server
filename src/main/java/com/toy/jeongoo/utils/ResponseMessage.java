@@ -42,4 +42,11 @@ public class ResponseMessage {
     // purchase
     public static final String PRODUCT_PURCHASE = "상품 구입 성공";
     public static final String PRODUCT_PURCHASE_FAIL = "상품 구입 실패";
+
+    // interset product
+    public static final String REGISTER_INTEREST_PRODUCT = "관심 상품 등록 성공";
+    public static final String REGISTER_INTEREST_PRODUCT_FAIL = "관심 상품 등록 실패";
+
+    public static final String CANCEL_INTEREST_PRODUCT = "관심 상품 취소 성공";
+    public static final String CANCEL_INTEREST_PRODUCT_FAIL = "관심 상품 취소 실패";
 }

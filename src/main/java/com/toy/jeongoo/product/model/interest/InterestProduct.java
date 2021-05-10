@@ -21,11 +21,20 @@ public class InterestProduct {
     @Column(name = "interest_product_id")
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private User interestedUser;
+
+    public InterestProduct(Product product, User interestedUser) {
+        this.product = product;
+        this.interestedUser = interestedUser;
+    }
+
+    public boolean isRegisteredUser(User user) {
+        return this.interestedUser.equals(user);
+    }
 }
