@@ -3,7 +3,6 @@ package com.toy.jeongoo.product.service;
 import com.toy.jeongoo.product.model.Product;
 import com.toy.jeongoo.product.repository.ProductRepository;
 import com.toy.jeongoo.user.model.User;
-import com.toy.jeongoo.user.repository.UserRepository;
 import com.toy.jeongoo.user.service.UserFindService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +20,11 @@ public class ProductFindService {
     private final ProductRepository productRepository;
     private final UserFindService userFindService;
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Product findProduct(Long productId) {
-        return findProductByIdWithUser(productId);
+        final Product product = findProductByIdWithUser(productId);
+        product.hit();
+        return product;
     }
 
     @Transactional(readOnly = true)

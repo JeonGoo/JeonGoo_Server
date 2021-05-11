@@ -26,7 +26,7 @@ public class ProductFindController {
     private final ProductFindService productFindService;
 
     @GetMapping("/{productId}")
-    public DefaultResponse<ProductShowResponse> findProduct(@PathVariable Long productId) {
+    public DefaultResponse<ProductShowResponse> showProductDetail(@PathVariable Long productId) {
         try {
             final Product product = productFindService.findProduct(productId);
             return DefaultResponse.res(OK, SHOW_PRODUCT, new ProductShowResponse(product));

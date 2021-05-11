@@ -47,6 +47,9 @@ public class Product {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "hit_count", nullable = false)
+    private long hitCount;
+
     @Embedded
     @Column(nullable = false)
     private Money price;
@@ -71,6 +74,7 @@ public class Product {
         this.serialNumber = serialNumber;
         this.description = description;
         this.price = Money.of(price);
+        this.hitCount = 0L;
         this.useStatus = useStatus;
         this.certificationStatus = REQUEST;
         this.grade = ProductGrade.NONE;
@@ -103,6 +107,10 @@ public class Product {
         changeFileList(fileList);
     }
 
+
+    public void hit() {
+        this.hitCount++;
+    }
 
     public boolean isSoldOut() {
         return this.salesStatus.equals(SOLD_OUT);
