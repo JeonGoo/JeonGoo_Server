@@ -19,28 +19,38 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Product> findAllByUser(User user) {
+    public List<Product> findAllByUserWithInterestProducts(User user) {
         return queryFactory
                 .selectFrom(product)
+                .distinct()
+                .leftJoin(product.interestProductList).fetchJoin()
                 .where(eqUser(user))
                 .fetch();
     }
 
     @Override
-    public Optional<Product> findByIdWithUser(Long productId) {
+    public Optional<Product> findByIdWithUserAndInterestProducts(Long productId) {
         return Optional.ofNullable(queryFactory
                 .selectFrom(product)
+                .distinct()
                 .innerJoin(product.user).fetchJoin()
-                .where(product.id.eq(productId))
+                .leftJoin(product.interestProductList).fetchJoin()
+                .where(eqProductId(productId))
                 .fetchOne());
     }
 
     @Override
-    public List<Product> findAllWithUser() {
+    public List<Product> findAllWithUserAndInterestProducts() {
         return queryFactory
                 .selectFrom(product)
+                .distinct()
                 .innerJoin(product.user).fetchJoin()
+                .leftJoin(product.interestProductList).fetchJoin()
                 .fetch();
+    }
+
+    private BooleanExpression eqProductId(Long productId) {
+        return product.id.eq(productId);
     }
 
     private BooleanExpression eqUser(User user) {

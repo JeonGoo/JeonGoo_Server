@@ -2,6 +2,7 @@ package com.toy.jeongoo.product.model;
 
 import com.toy.jeongoo.common.Money;
 import com.toy.jeongoo.file.model.File;
+import com.toy.jeongoo.product.model.interest.InterestProduct;
 import com.toy.jeongoo.product.model.status.CertificationStatus;
 import com.toy.jeongoo.product.model.status.SalesStatus;
 import com.toy.jeongoo.product.model.status.UseStatus;
@@ -38,6 +39,9 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<File> fileList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<InterestProduct> interestProductList = new ArrayList<>();
+
     @Column(name = "name")
     private String name;
 
@@ -46,6 +50,9 @@ public class Product {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "hit_count", nullable = false)
+    private long hitCount;
 
     @Embedded
     @Column(nullable = false)
@@ -71,6 +78,7 @@ public class Product {
         this.serialNumber = serialNumber;
         this.description = description;
         this.price = Money.of(price);
+        this.hitCount = 0L;
         this.useStatus = useStatus;
         this.certificationStatus = REQUEST;
         this.grade = ProductGrade.NONE;
@@ -103,6 +111,9 @@ public class Product {
         changeFileList(fileList);
     }
 
+    public void hit() {
+        this.hitCount++;
+    }
 
     public boolean isSoldOut() {
         return this.salesStatus.equals(SOLD_OUT);
@@ -110,6 +121,14 @@ public class Product {
 
     public void soldOut() {
         this.salesStatus = SOLD_OUT;
+    }
+
+    public void addInterestProduct(InterestProduct interestProduct) {
+        this.interestProductList.add(interestProduct);
+    }
+
+    public int getInterestCount() {
+        return interestProductList.size();
     }
 
     private void checkGradeIsNotNone(ProductGrade grade) {

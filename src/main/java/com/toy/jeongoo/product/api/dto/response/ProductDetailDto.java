@@ -21,6 +21,7 @@ public class ProductDetailDto {
     private String name;
     private String description;
     private Long price;
+    private long hitCount;
     private UseStatus useStatus;
     private CertificationStatus certificationStatus;
     private String certificationFailedReason;
@@ -33,6 +34,7 @@ public class ProductDetailDto {
         this.name = product.getName();
         this.description = product.getDescription();
         this.price = product.getPrice().getValue();
+        this.hitCount = product.getHitCount();
         this.useStatus = product.getUseStatus();
         this.certificationStatus = product.getCertificationStatus();
         this.certificationFailedReason = product.getCertificationFailedReason();
