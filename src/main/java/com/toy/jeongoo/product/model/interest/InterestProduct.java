@@ -21,13 +21,19 @@ public class InterestProduct {
     @Column(name = "interest_product_id")
     private Long id;
 
-    @OneToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User interestedUser;
+
+    public static InterestProduct createInterestProduct(Product product, User interestedUser) {
+        final InterestProduct interestProduct = new InterestProduct(product, interestedUser);
+        product.addInterestProduct(interestProduct);
+        return interestProduct;
+    }
 
     public InterestProduct(Product product, User interestedUser) {
         this.product = product;

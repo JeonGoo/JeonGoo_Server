@@ -2,6 +2,7 @@ package com.toy.jeongoo.product.model;
 
 import com.toy.jeongoo.common.Money;
 import com.toy.jeongoo.file.model.File;
+import com.toy.jeongoo.product.model.interest.InterestProduct;
 import com.toy.jeongoo.product.model.status.CertificationStatus;
 import com.toy.jeongoo.product.model.status.SalesStatus;
 import com.toy.jeongoo.product.model.status.UseStatus;
@@ -37,6 +38,9 @@ public class Product {
 
     @OneToMany(mappedBy = "product", fetch = EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<File> fileList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<InterestProduct> interestProductList = new ArrayList<>();
 
     @Column(name = "name")
     private String name;
@@ -107,7 +111,6 @@ public class Product {
         changeFileList(fileList);
     }
 
-
     public void hit() {
         this.hitCount++;
     }
@@ -118,6 +121,14 @@ public class Product {
 
     public void soldOut() {
         this.salesStatus = SOLD_OUT;
+    }
+
+    public void addInterestProduct(InterestProduct interestProduct) {
+        this.interestProductList.add(interestProduct);
+    }
+
+    public int getInterestCount() {
+        return interestProductList.size();
     }
 
     private void checkGradeIsNotNone(ProductGrade grade) {

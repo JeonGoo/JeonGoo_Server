@@ -25,7 +25,7 @@ public class InterestProductService {
     public Long registerInterestProduct(Long productId, Long userId) {
         final Product product = productFindService.findProduct(productId);
         final User user = userFindService.findUser(userId);
-        final InterestProduct interestProduct = new InterestProduct(product, user);
+        final InterestProduct interestProduct = InterestProduct.createInterestProduct(product, user);
 
         interestProductRepository.save(interestProduct);
         return interestProduct.getId();
