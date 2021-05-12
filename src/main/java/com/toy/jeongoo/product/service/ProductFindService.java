@@ -22,24 +22,29 @@ public class ProductFindService {
 
     @Transactional
     public Product findProduct(Long productId) {
-        final Product product = findProductByIdWithUser(productId);
+        return findProductById(productId);
+    }
+
+    @Transactional
+    public Product showProductDetail(Long productId) {
+        final Product product = findProductById(productId);
         product.hit();
         return product;
     }
 
     @Transactional(readOnly = true)
     public List<Product> findAllProduct() {
-        return productRepository.findAllWithUser();
+        return productRepository.findAllWithUserAndInterestProducts();
     }
 
     @Transactional(readOnly = true)
     public List<Product> findAllProductByUser(Long userId) {
         final User user = userFindService.findUser(userId);
-        return productRepository.findAllByUser(user);
+        return productRepository.findAllByUserWithInterestProducts(user);
     }
 
-    private Product findProductByIdWithUser(Long productId) {
-        return productRepository.findByIdWithUser(productId)
+    private Product findProductById(Long productId) {
+        return productRepository.findByIdWithUserAndInterestProducts(productId)
                 .orElseThrow(() -> new NoSuchElementException(String.format("not found product. input id: %d", productId)));
     }
 }
