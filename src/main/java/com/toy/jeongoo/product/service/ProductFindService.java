@@ -43,6 +43,11 @@ public class ProductFindService {
         return productRepository.findAllByUserWithInterestProducts(user);
     }
 
+    @Transactional(readOnly = true)
+    public List<Product> showAllSaleProducts() {
+        return productRepository.findAllSaleProducts();
+    }
+
     private Product findProductById(Long productId) {
         return productRepository.findByIdWithUserAndInterestProducts(productId)
                 .orElseThrow(() -> new NoSuchElementException(String.format("not found product. input id: %d", productId)));

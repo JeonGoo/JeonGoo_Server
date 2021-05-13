@@ -1,8 +1,10 @@
 package com.toy.jeongoo.product.repository;
 
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.toy.jeongoo.product.model.Product;
+import com.toy.jeongoo.product.model.status.SalesStatus;
 import com.toy.jeongoo.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -47,6 +49,21 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
                 .innerJoin(product.user).fetchJoin()
                 .leftJoin(product.interestProductList).fetchJoin()
                 .fetch();
+    }
+
+    @Override
+    public List<Product> findAllSaleProducts() {
+        return queryFactory
+                .selectFrom(product)
+                .distinct()
+                .innerJoin(product.user).fetchJoin()
+                .leftJoin(product.interestProductList).fetchJoin()
+                .where(isSale())
+                .fetch();
+    }
+
+    private BooleanExpression isSale() {
+        return product.salesStatus.eq(SalesStatus.SALE);
     }
 
     private BooleanExpression eqProductId(Long productId) {

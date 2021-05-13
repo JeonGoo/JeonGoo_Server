@@ -58,6 +58,17 @@ public class ProductFindController {
         }
     }
 
+    @GetMapping("/sale")
+    public DefaultResponse<List<ProductShowDetailResponse>> showAllSaleProducts() {
+        try {
+            final List<Product> productList = productFindService.showAllSaleProducts();
+            return DefaultResponse.res(OK, SHOW_PRODUCT, toProductShowDetailResponseList(productList));
+        } catch (Exception productShowException) {
+            log.error(productShowException.getMessage());
+            return DefaultResponse.res(BAD_REQUEST, SHOW_PRODUCT_FAIL);
+        }
+    }
+
     private List<ProductShowDetailResponse> toProductShowDetailResponseList(List<Product> productList) {
         return productList.stream()
                 .map(ProductShowDetailResponse::new)
