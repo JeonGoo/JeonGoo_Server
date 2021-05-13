@@ -3,7 +3,7 @@ package com.toy.jeongoo.product.api;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toy.jeongoo.product.api.dto.request.ProductCertificationFailedRequest;
-import com.toy.jeongoo.product.api.dto.request.ProductCertificationRequest;
+import com.toy.jeongoo.product.api.dto.request.ProductGradeUpdateRequest;
 import com.toy.jeongoo.product.model.Product;
 import com.toy.jeongoo.product.model.ProductGrade;
 import com.toy.jeongoo.product.model.status.CertificationStatus;
@@ -57,7 +57,7 @@ class ProductCertificationControllerTest {
     @DisplayName("상품 인증 성공")
     public void certifyTest() throws Exception {
         //given
-        ProductCertificationRequest certificationRequest = new ProductCertificationRequest(ProductGrade.HIGH);
+        ProductGradeUpdateRequest certificationRequest = new ProductGradeUpdateRequest(ProductGrade.HIGH);
         final String certificationRequestString = objectMapper.writeValueAsString(certificationRequest);
 
         //then
@@ -71,7 +71,7 @@ class ProductCertificationControllerTest {
     @DisplayName("상품 인증시 상품 등급이 NONE이면 오류 발생")
     public void certifyTest_error() throws Exception {
         //given
-        ProductCertificationRequest certificationRequest = new ProductCertificationRequest(ProductGrade.NONE);
+        ProductGradeUpdateRequest certificationRequest = new ProductGradeUpdateRequest(ProductGrade.NONE);
         final String certificationRequestString = objectMapper.writeValueAsString(certificationRequest);
 
         //when

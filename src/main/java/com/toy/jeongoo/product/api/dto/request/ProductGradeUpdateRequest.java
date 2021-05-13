@@ -9,12 +9,12 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @NoArgsConstructor
-public class ProductCertificationRequest {
+public class ProductGradeUpdateRequest {
 
-    @NotNull(message = "상품을 인증할 때 상품 등급을 입력해줘야 합니다.")
+    @NotNull(message = "상품 등급을 입력해줘야 합니다.")
     private ProductGrade productGrade;
 
-    public ProductCertificationRequest(@NotNull ProductGrade productGrade) {
+    public ProductGradeUpdateRequest(@NotNull ProductGrade productGrade) {
         this.productGrade = productGrade;
     }
 }
