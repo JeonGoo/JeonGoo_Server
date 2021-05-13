@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static com.toy.jeongoo.product.model.QProduct.product;
 import static com.toy.jeongoo.product.model.purchased.QPurchasedProduct.*;
 
 @Repository
@@ -18,28 +19,54 @@ public class PurchasedProductRepositoryCustomImpl implements PurchasedProductRep
 
     @Override
     public List<PurchasedProduct> findAllByPurchasedUserWithProductAndPurchasedUser() {
-        return queryFactory
+        final List<PurchasedProduct> purchasedProductList = queryFactory
                 .selectFrom(purchasedProduct)
                 .innerJoin(purchasedProduct.product).fetchJoin()
                 .innerJoin(purchasedProduct.purchasedUser).fetchJoin()
                 .fetch();
+
+        queryFactory.select(product)
+                .from(product, purchasedProduct)
+                .innerJoin(product.user).fetchJoin()
+                .where(purchasedProduct.in(purchasedProductList))
+                .fetch();
+
+        return purchasedProductList;
     }
 
     @Override
     public List<PurchasedProduct> findAllByPurchasedUserWithProduct(User purchasedUser) {
-        return queryFactory
+        final List<PurchasedProduct> purchasedProductList = queryFactory
                 .selectFrom(purchasedProduct)
                 .innerJoin(purchasedProduct.product).fetchJoin()
+                .innerJoin(purchasedProduct.purchasedUser)
                 .where(purchasedProduct.purchasedUser.eq(purchasedUser))
                 .fetch();
+
+        queryFactory.select(product)
+                .from(product, purchasedProduct)
+                .innerJoin(product.user).fetchJoin()
+                .where(purchasedProduct.in(purchasedProductList))
+                .fetch();
+
+        return purchasedProductList;
     }
 
     @Override
     public List<PurchasedProduct> findAllBySaleUserWithProduct(User saleUser) {
-        return queryFactory
+        final List<PurchasedProduct> purchasedProductList = queryFactory
                 .selectFrom(purchasedProduct)
                 .innerJoin(purchasedProduct.product).fetchJoin()
+                .innerJoin(purchasedProduct.purchasedUser)
                 .where(purchasedProduct.product.user.eq(saleUser))
                 .fetch();
+
+        queryFactory.select(product)
+                .from(product, purchasedProduct)
+                .innerJoin(product.user).fetchJoin()
+                .where(purchasedProduct.in(purchasedProductList))
+                .fetch();
+
+        return purchasedProductList;
     }
 }
