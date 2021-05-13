@@ -1,6 +1,7 @@
 package com.toy.jeongoo.product.repository.purchase;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.toy.jeongoo.product.model.Product;
 import com.toy.jeongoo.product.model.purchased.PurchasedProduct;
 import com.toy.jeongoo.user.model.User;
 import lombok.RequiredArgsConstructor;
@@ -68,5 +69,20 @@ public class PurchasedProductRepositoryCustomImpl implements PurchasedProductRep
                 .fetch();
 
         return purchasedProductList;
+    }
+
+    @Override
+    public long deleteAllByProduct(Product product) {
+        return queryFactory.delete(purchasedProduct)
+                .where(purchasedProduct.product.eq(product))
+                .execute();
+    }
+
+    @Override
+    public long deleteAllByProductListAndPurchasedUser(List<Product> productList, User user) {
+        return queryFactory.delete(purchasedProduct)
+                .where(purchasedProduct.product.in(productList)
+                        .or(purchasedProduct.purchasedUser.eq(user)))
+                .execute();
     }
 }

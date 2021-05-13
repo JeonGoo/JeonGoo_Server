@@ -10,4 +10,6 @@ public interface InterestProductRepositoryCustom {
     List<InterestProduct> findAllByInterestedUser(User interestedUser);
 
     Long findCountByProduct(Product product);
+
+    long deleteAllByInterestedUser(User user);
 }
