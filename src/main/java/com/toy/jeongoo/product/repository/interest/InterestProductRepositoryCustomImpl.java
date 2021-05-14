@@ -47,6 +47,7 @@ public class InterestProductRepositoryCustomImpl implements InterestProductRepos
                 .where(interestProduct.product.eq(product)
                         .and(interestProduct.interestedUser.eq(interestedUser)))
                 .fetchOne());
+    }
       
     @Override  
     public long deleteAllByInterestedUser(User user) {
