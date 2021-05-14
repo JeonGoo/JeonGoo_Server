@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -52,6 +53,13 @@ public class InterestProductService {
         }
         interestProductRepository.delete(interestProduct);
         return interestProduct.getId();
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<InterestProduct> findByProductAndInterestedUser(Long productId, Long interestedUserId){
+        final Product product = productFindService.findProduct(productId);
+        final User interestedUser = userFindService.findUser(interestedUserId);
+        return interestProductRepository.findByProductAndInterestedUser(product, interestedUser);
     }
 
     private InterestProduct findInterestProductById(Long interestProductId) {
