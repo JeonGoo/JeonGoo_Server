@@ -1,7 +1,6 @@
 package com.toy.jeongoo.product.service;
 
 import com.toy.jeongoo.product.api.dto.request.ProductCertificationFailedRequest;
-import com.toy.jeongoo.product.api.dto.request.ProductCertificationRequest;
 import com.toy.jeongoo.product.model.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,9 +13,9 @@ public class ProductCertificationService {
     private final ProductFindService productFindService;
 
     @Transactional
-    public Long certify(Long productId, ProductCertificationRequest certificationRequest) {
+    public Long certify(Long productId) {
         final Product product = productFindService.findProduct(productId);
-        product.certify(certificationRequest.getProductGrade());
+        product.certify();
         return product.getId();
     }
 

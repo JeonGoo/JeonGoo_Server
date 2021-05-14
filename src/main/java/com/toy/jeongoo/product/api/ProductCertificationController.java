@@ -1,14 +1,11 @@
 package com.toy.jeongoo.product.api;
 
 import com.toy.jeongoo.product.api.dto.request.ProductCertificationFailedRequest;
-import com.toy.jeongoo.product.api.dto.request.ProductCertificationRequest;
 import com.toy.jeongoo.product.service.ProductCertificationService;
 import com.toy.jeongoo.utils.DefaultResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 import static com.toy.jeongoo.utils.ResponseMessage.*;
 import static com.toy.jeongoo.utils.ResponseMessage.CERTIFICATE_PRODUCT_FAIL_ERROR;
@@ -24,10 +21,9 @@ public class ProductCertificationController {
     private final ProductCertificationService certificationService;
 
     @PutMapping("/{productId}/certification")
-    public DefaultResponse<Long> certify(@PathVariable Long productId,
-                                         @Valid @RequestBody ProductCertificationRequest certificationRequest) {
+    public DefaultResponse<Long> certify(@PathVariable Long productId) {
         try {
-            final Long certificationProduct = certificationService.certify(productId, certificationRequest);
+            final Long certificationProduct = certificationService.certify(productId);
             return DefaultResponse.res(OK, CERTIFICATE_PRODUCT, certificationProduct);
         } catch (Exception productException) {
             log.error(productException.getMessage());

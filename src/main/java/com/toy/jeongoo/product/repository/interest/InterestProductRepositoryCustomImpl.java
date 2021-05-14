@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.toy.jeongoo.product.model.QProduct.product;
 import static com.toy.jeongoo.product.model.interest.QInterestProduct.interestProduct;
@@ -40,6 +41,14 @@ public class InterestProductRepositoryCustomImpl implements InterestProductRepos
     }
 
     @Override
+    public Optional<InterestProduct> findByProductAndInterestedUser(Product product, User interestedUser) {
+        return Optional.ofNullable(queryFactory
+                .selectFrom(interestProduct)
+                .where(interestProduct.product.eq(product)
+                        .and(interestProduct.interestedUser.eq(interestedUser)))
+                .fetchOne());
+      
+    @Override  
     public long deleteAllByInterestedUser(User user) {
         return queryFactory.delete(interestProduct)
                 .where(interestProduct.interestedUser.eq(user))

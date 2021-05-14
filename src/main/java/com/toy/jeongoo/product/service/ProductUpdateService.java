@@ -4,6 +4,7 @@ import com.toy.jeongoo.file.dto.request.FileInfoRequest;
 import com.toy.jeongoo.file.model.File;
 import com.toy.jeongoo.file.service.FileService;
 import com.toy.jeongoo.product.api.dto.request.ProductBasicInfoRequest;
+import com.toy.jeongoo.product.api.dto.request.ProductGradeUpdateRequest;
 import com.toy.jeongoo.product.model.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,13 @@ public class ProductUpdateService {
         product.update(productBasicInfo.getName(), productBasicInfo.getPrice(), productBasicInfo.getSerialNumber(),
                 productBasicInfo.getDescription(), productBasicInfo.getUseStatus(), uploadedFileList);
 
+        return product.getId();
+    }
+
+    @Transactional
+    public Long updateGrade(Long productId, ProductGradeUpdateRequest gradeUpdateRequest) {
+        final Product product = productFindService.findProduct(productId);
+        product.changeGrade(gradeUpdateRequest.getProductGrade());
         return product.getId();
     }
 }

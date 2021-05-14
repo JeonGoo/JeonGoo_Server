@@ -2,6 +2,7 @@ package com.toy.jeongoo.product.model;
 
 import com.toy.jeongoo.common.Money;
 import com.toy.jeongoo.file.model.File;
+import com.toy.jeongoo.product.api.dto.request.ProductGradeUpdateRequest;
 import com.toy.jeongoo.product.model.interest.InterestProduct;
 import com.toy.jeongoo.product.model.status.CertificationStatus;
 import com.toy.jeongoo.product.model.status.SalesStatus;
@@ -87,11 +88,9 @@ public class Product {
         changeFileList(fileList);
     }
 
-    public void certify(ProductGrade grade) {
+    public void certify() {
         checkCanCertification();
-        checkGradeIsNotNone(grade);
         this.certificationStatus = COMPLETED;
-        this.grade = grade;
     }
 
     public void certifyFailed(String certificationFailedReason) {
@@ -129,6 +128,11 @@ public class Product {
 
     public int getInterestCount() {
         return interestProductList.size();
+    }
+
+    public void changeGrade(ProductGrade productGrade) {
+        checkGradeIsNotNone(productGrade);
+        this.grade = productGrade;
     }
 
     private void checkGradeIsNotNone(ProductGrade grade) {

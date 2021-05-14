@@ -1,7 +1,7 @@
 package com.toy.jeongoo.product.service;
 
 import com.toy.jeongoo.product.api.dto.request.ProductCertificationFailedRequest;
-import com.toy.jeongoo.product.api.dto.request.ProductCertificationRequest;
+import com.toy.jeongoo.product.api.dto.request.ProductGradeUpdateRequest;
 import com.toy.jeongoo.product.model.Product;
 import com.toy.jeongoo.product.model.ProductGrade;
 import com.toy.jeongoo.product.model.status.CertificationStatus;
@@ -46,7 +46,7 @@ class ProductCertificationServiceTest {
     public void certifyTest() throws Exception {
         //given
         ProductGrade productGrade = ProductGrade.INTERMEDIATE;
-        ProductCertificationRequest certificationRequest = new ProductCertificationRequest(productGrade);
+        ProductGradeUpdateRequest certificationRequest = new ProductGradeUpdateRequest(productGrade);
         Long productId = product.getId();
 
         //when
