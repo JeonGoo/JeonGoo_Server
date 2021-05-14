@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.toy.jeongoo.product.model.QProduct.*;
+import static com.toy.jeongoo.product.model.interest.QInterestProduct.*;
+import static com.toy.jeongoo.product.model.purchased.QPurchasedProduct.*;
 
 @Repository
 @RequiredArgsConstructor
@@ -47,6 +49,13 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
                 .innerJoin(product.user).fetchJoin()
                 .leftJoin(product.interestProductList).fetchJoin()
                 .fetch();
+    }
+
+    @Override
+    public long deleteAllByUser(User user) {
+        return queryFactory.delete(product)
+                .where(product.user.eq(user))
+                .execute();
     }
 
     private BooleanExpression eqProductId(Long productId) {

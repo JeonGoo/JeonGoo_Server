@@ -54,6 +54,11 @@ public class InterestProductService {
         return interestProduct.getId();
     }
 
+    @Transactional
+    public void deleteAllByInterestedUser(User user) {
+        interestProductRepository.deleteAllByInterestedUser(user);
+    }
+
     private InterestProduct findInterestProductById(Long interestProductId) {
         return interestProductRepository.findById(interestProductId)
                 .orElseThrow(() -> new NoSuchElementException(String.format("not found interest product. interestProductId : %d", interestProductId)));
