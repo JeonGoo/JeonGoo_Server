@@ -14,4 +14,6 @@ public interface ProductRepositoryCustom {
     List<Product> findAllWithUserAndInterestProducts();
 
     List<Product> findAllSaleProducts();
+  
+    long deleteAllByUser(User user);
 }

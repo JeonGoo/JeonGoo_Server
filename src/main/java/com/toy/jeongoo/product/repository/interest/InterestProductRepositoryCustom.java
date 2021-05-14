@@ -13,4 +13,6 @@ public interface InterestProductRepositoryCustom {
     Long findCountByProduct(Product product);
 
     Optional<InterestProduct> findByProductAndInterestedUser(Product product, User interestedUser);
+
+    long deleteAllByInterestedUser(User user);
 }

@@ -44,6 +44,11 @@ public class ProductFindService {
     }
 
     @Transactional(readOnly = true)
+    public List<Product> findAllProductByUser(User user) {
+        return productRepository.findAllByUserWithInterestProducts(user);
+    }
+  
+    @Transactional(readOnly = true)
     public List<Product> showAllSaleProducts() {
         return productRepository.findAllSaleProducts();
     }
