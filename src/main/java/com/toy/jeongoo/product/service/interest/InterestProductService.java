@@ -55,8 +55,18 @@ public class InterestProductService {
         return interestProduct.getId();
     }
 
+    @Transactional
+    public Long cancelByRegisterProduct(Long productId, Long interestedUserId) {
+        final Product product = productFindService.findProduct(productId);
+        final User interestedUser = userFindService.findUser(interestedUserId);
+        final InterestProduct interestProduct = interestProductRepository.findByProductAndInterestedUser(product, interestedUser)
+                .orElseThrow(() -> new IllegalArgumentException("not found interestProduct."));
+        interestProductRepository.delete(interestProduct);
+        return interestProduct.getId();
+    }
+
     @Transactional(readOnly = true)
-    public Optional<InterestProduct> findByProductAndInterestedUser(Long productId, Long interestedUserId){
+    public Optional<InterestProduct> findByProductAndInterestedUser(Long productId, Long interestedUserId) {
         final Product product = productFindService.findProduct(productId);
         final User interestedUser = userFindService.findUser(interestedUserId);
         return interestProductRepository.findByProductAndInterestedUser(product, interestedUser);
