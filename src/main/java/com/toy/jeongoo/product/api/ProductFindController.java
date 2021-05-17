@@ -9,6 +9,7 @@ import com.toy.jeongoo.product.service.interest.InterestProductService;
 import com.toy.jeongoo.utils.DefaultResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,9 +56,11 @@ public class ProductFindController {
     }
 
     @GetMapping
-    public DefaultResponse<List<ProductShowDetailResponse>> showAllProductsDetail() {
+    public DefaultResponse<List<ProductShowDetailResponse>> showAllProductsDetailPage(Pageable pageable) {
         try {
-            final List<Product> productList = productFindService.findAllProduct();
+            log.info(String.valueOf(pageable.getOffset()));
+            log.info(String.valueOf(pageable.getPageSize()));
+            final List<Product> productList = productFindService.findAllProductPage(pageable);
             return DefaultResponse.res(OK, SHOW_PRODUCT, toProductShowDetailResponseList(productList));
         } catch (Exception productShowException) {
             log.error(productShowException.getMessage());
@@ -66,9 +69,10 @@ public class ProductFindController {
     }
 
     @GetMapping("/users/{userId}")
-    public DefaultResponse<List<ProductShowDetailResponse>> findAllProductByUser(@PathVariable Long userId) {
+    public DefaultResponse<List<ProductShowDetailResponse>> findAllProductPageByUser(@PathVariable Long userId,
+                                                                                     Pageable pageable) {
         try {
-            final List<Product> productList = productFindService.findAllProductByUser(userId);
+            final List<Product> productList = productFindService.findAllProductPageByUser(userId, pageable);
             return DefaultResponse.res(OK, SHOW_PRODUCT, toProductShowDetailResponseList(productList));
         } catch (Exception productShowException) {
             log.error(productShowException.getMessage());
@@ -77,9 +81,9 @@ public class ProductFindController {
     }
 
     @GetMapping("/sale")
-    public DefaultResponse<List<ProductShowDetailResponse>> showAllSaleProducts() {
+    public DefaultResponse<List<ProductShowDetailResponse>> showAllSaleProductsPage(Pageable pageable) {
         try {
-            final List<Product> productList = productFindService.showAllSaleProducts();
+            final List<Product> productList = productFindService.showAllSaleProductsPage(pageable);
             return DefaultResponse.res(OK, SHOW_PRODUCT, toProductShowDetailResponseList(productList));
         } catch (Exception productShowException) {
             log.error(productShowException.getMessage());
