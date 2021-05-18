@@ -56,7 +56,7 @@ class ProductFindServiceTest {
         }
 
         //when
-        final List<Product> allProduct = productFindService.findAllProduct();
+        final List<Product> allProduct = productFindService.findAllProductPage();
 
         //then
         assertThat(allProduct.size()).isEqualTo(size);

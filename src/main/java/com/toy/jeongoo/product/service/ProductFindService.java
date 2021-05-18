@@ -6,6 +6,7 @@ import com.toy.jeongoo.user.model.User;
 import com.toy.jeongoo.user.service.UserFindService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,14 +34,14 @@ public class ProductFindService {
     }
 
     @Transactional(readOnly = true)
-    public List<Product> findAllProduct() {
-        return productRepository.findAllWithUserAndInterestProducts();
+    public List<Product> findAllProductPage(Pageable pageable) {
+        return productRepository.findAllPageWithUserAndInterestProducts(pageable);
     }
 
     @Transactional(readOnly = true)
-    public List<Product> findAllProductByUser(Long userId) {
+    public List<Product> findAllProductPageByUser(Long userId, Pageable pageable) {
         final User user = userFindService.findUser(userId);
-        return productRepository.findAllByUserWithInterestProducts(user);
+        return productRepository.findAllPageByUserWithInterestProducts(user, pageable);
     }
 
     @Transactional(readOnly = true)
@@ -49,8 +50,8 @@ public class ProductFindService {
     }
   
     @Transactional(readOnly = true)
-    public List<Product> showAllSaleProducts() {
-        return productRepository.findAllSaleProducts();
+    public List<Product> showAllSaleProductsPage(Pageable pageable) {
+        return productRepository.findAllSaleProductsPage(pageable);
     }
 
     private Product findProductById(Long productId) {
