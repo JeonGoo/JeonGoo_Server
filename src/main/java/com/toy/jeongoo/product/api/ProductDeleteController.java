@@ -3,7 +3,6 @@ package com.toy.jeongoo.product.api;
 import com.toy.jeongoo.product.service.ProductDeleteService;
 import com.toy.jeongoo.utils.DefaultResponse;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +29,7 @@ public class ProductDeleteController {
             @ApiResponse(code = 400, message = "상품 삭제 실패")
     })
     @DeleteMapping("/{productId}")
-    public DefaultResponse<Long> delete(@ApiParam(name = "삭제할 상품 Id", required = true) @PathVariable Long productId) {
+    public DefaultResponse<Long> delete(@PathVariable Long productId) {
         try {
             final Long product = productDeleteService.delete(productId);
             return DefaultResponse.res(OK, DELETE_PRODUCT, product);

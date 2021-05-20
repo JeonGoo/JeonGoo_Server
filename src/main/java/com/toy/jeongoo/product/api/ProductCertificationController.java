@@ -30,7 +30,7 @@ public class ProductCertificationController {
             @ApiResponse(code = 400, message = "구매 인증 오류")
     })
     @PutMapping("/{productId}/certification")
-    public DefaultResponse<Long> certify(@ApiParam(name = "정품 인증할 상품 id", required = true) @PathVariable Long productId) {
+    public DefaultResponse<Long> certify(@PathVariable Long productId) {
         try {
             final Long certificationProduct = certificationService.certify(productId);
             return DefaultResponse.res(OK, CERTIFICATE_PRODUCT, certificationProduct);
@@ -46,7 +46,7 @@ public class ProductCertificationController {
             @ApiResponse(code = 400, message = "정품 인증 실패 알림 오류")
     })
     @PutMapping("/{productId}/certification/failure")
-    public DefaultResponse<Long> certifyFailed(@ApiParam(name = "정품 인증 실패 상품 id", required = true) @PathVariable Long productId,
+    public DefaultResponse<Long> certifyFailed(@PathVariable Long productId,
                                                @ApiParam(name = "정품 인증 실패 이유") @RequestBody ProductCertificationFailedRequest certificationFailedRequest) {
         try {
             Long certificationFailedProduct = certificationService.failed(productId, certificationFailedRequest);

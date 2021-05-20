@@ -31,7 +31,7 @@ public class ProductUpdateController {
             @ApiResponse(code = 400, message = "상품 수정 실패")
     })
     @PutMapping("/{productId}")
-    public DefaultResponse<Long> update(@ApiParam(name = "수정할 상품 id", required = true) @PathVariable Long productId,
+    public DefaultResponse<Long> update(@PathVariable Long productId,
                                         @ApiParam(name = "수정하고 싶은 상품 내용") @RequestBody ProductUpdateRequest updateRequest) {
         try {
             final Long product = productUpdateService.update(productId, updateRequest.getProductBasicInfoRequest(), updateRequest.getFileInfoRequest());
@@ -48,7 +48,7 @@ public class ProductUpdateController {
             @ApiResponse(code = 400, message = "상품 수정 실패")
     })
     @PutMapping("/{productId}/grade")
-    public DefaultResponse<Long> updateGrade(@ApiParam(name = "수정할 상품 id", required = true) @PathVariable Long productId,
+    public DefaultResponse<Long> updateGrade(@PathVariable Long productId,
                                              @ApiParam(name = "수정하고 싶은 상품 등급", required = true) @Valid @RequestBody ProductGradeUpdateRequest gradeUpdateRequest) {
         try {
             final Long product = productUpdateService.updateGrade(productId, gradeUpdateRequest);

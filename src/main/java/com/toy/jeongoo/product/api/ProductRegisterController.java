@@ -29,7 +29,7 @@ public class ProductRegisterController {
     })
     @PostMapping("/users/{userId}")
     public DefaultResponse<Long> register(@ApiParam(name = "상품에 대한 정보", required = true) @RequestBody ProductRegistrationRequest productRequest,
-                                          @ApiParam(name = "상품을 등록하는 회원 id", required = true) @PathVariable Long userId) {
+                                          @PathVariable Long userId) {
         try {
             final Long registrationId = registrationService.register(productRequest.getProductBasicInfoRequest(), productRequest.getFileInfoRequest(), userId);
             return DefaultResponse.res(CREATED, REGISTER_PRODUCT, registrationId);
