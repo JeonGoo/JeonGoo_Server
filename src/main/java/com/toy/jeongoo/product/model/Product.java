@@ -135,6 +135,10 @@ public class Product {
         this.grade = productGrade;
     }
 
+    public void deleteInterestProduct(InterestProduct interestProduct) {
+        this.interestProductList.remove(interestProduct);
+    }
+
     private void checkGradeIsNotNone(ProductGrade grade) {
         if (grade.equals(ProductGrade.NONE)) {
             throw new IllegalArgumentException("product grade should not be none!");
