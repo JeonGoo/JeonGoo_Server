@@ -2,6 +2,9 @@ package com.toy.jeongoo.product.api;
 
 import com.toy.jeongoo.product.service.ProductPurchaseService;
 import com.toy.jeongoo.utils.DefaultResponse;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +23,11 @@ public class ProductPurchaseController {
 
     private final ProductPurchaseService productPurchaseService;
 
+    @ApiOperation(value = "상품 구매", notes = "상품을 구매한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "상품 구매 성공"),
+            @ApiResponse(code = 400, message = "상품 구매 실패")
+    })
     @PostMapping("/{productId}/purchase/{userId}")
     public DefaultResponse<Long> purchase(@PathVariable Long productId,
                                           @PathVariable Long userId) {
