@@ -27,7 +27,7 @@ public class ProductUpdateController {
     @PutMapping("/{productId}")
     public DefaultResponse<Long> update(@PathVariable Long productId,
                                         ProductBasicInfoRequest productBasicInfoRequest,
-                                        @RequestPart(name = "imageFile", required = false) List<MultipartFile> imageFiles,
+                                        @RequestPart(name = "imageFiles", required = false) List<MultipartFile> imageFiles,
                                         @RequestPart(name = "videoFile", required = false) MultipartFile videoFile) {
         try {
             final Long product = productUpdateService.update(productId, productBasicInfoRequest, imageFiles, videoFile);

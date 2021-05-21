@@ -24,9 +24,10 @@ public class ProductRegisterController {
     @PostMapping("/users/{userId}")
     public DefaultResponse<Long> register(@PathVariable Long userId,
                                           ProductBasicInfoRequest productBasicInfoRequest,
-                                          @RequestPart(name = "imageFile", required = false) List<MultipartFile> imageFiles,
+                                          @RequestPart(name = "imageFiles", required = false) List<MultipartFile> imageFiles,
                                           @RequestPart(name = "videoFile", required = false) MultipartFile videoFile) {
         try {
+            log.info(productBasicInfoRequest.getDescription());
             final Long registrationId = registrationService.register(productBasicInfoRequest, imageFiles, videoFile, userId);
             return DefaultResponse.res(CREATED, REGISTER_PRODUCT, registrationId);
         } catch (Exception productRegistrationException) {
