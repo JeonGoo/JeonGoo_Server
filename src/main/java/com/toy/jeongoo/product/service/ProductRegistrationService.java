@@ -11,6 +11,7 @@ import com.toy.jeongoo.user.service.UserFindService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -23,9 +24,9 @@ public class ProductRegistrationService {
     private final FileService fileService;
 
     @Transactional
-    public Long register(ProductBasicInfoRequest productBasicInfo, FileInfoRequest fileInfo, Long userId) {
+    public Long register(ProductBasicInfoRequest productBasicInfo, List<MultipartFile> imageFiles, MultipartFile videoFile, Long userId) {
         final User user = userFindService.findUser(userId);
-        final List<File> uploadedFileList = fileService.upload(fileInfo);
+        final List<File> uploadedFileList = fileService.upload(imageFiles, videoFile);
         final Product product = new Product(productBasicInfo.getName(), productBasicInfo.getPrice(), productBasicInfo.getSerialNumber(),
                 productBasicInfo.getDescription(), productBasicInfo.getUseStatus(), user, uploadedFileList);
         productRepository.save(product);

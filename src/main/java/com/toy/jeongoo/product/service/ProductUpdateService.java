@@ -1,6 +1,5 @@
 package com.toy.jeongoo.product.service;
 
-import com.toy.jeongoo.file.dto.request.FileInfoRequest;
 import com.toy.jeongoo.file.model.File;
 import com.toy.jeongoo.file.service.FileService;
 import com.toy.jeongoo.product.api.dto.request.ProductBasicInfoRequest;
@@ -9,6 +8,7 @@ import com.toy.jeongoo.product.model.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,9 +20,9 @@ public class ProductUpdateService {
     private final FileService fileService;
 
     @Transactional
-    public Long update(Long productId, ProductBasicInfoRequest productBasicInfo, FileInfoRequest fileInfo) {
+    public Long update(Long productId, ProductBasicInfoRequest productBasicInfo, List<MultipartFile> imageFiles, MultipartFile videoFile) {
         final Product product = productFindService.findProduct(productId);
-        final List<File> uploadedFileList = fileService.upload(fileInfo);
+        final List<File> uploadedFileList = fileService.upload(imageFiles, videoFile);
         product.update(productBasicInfo.getName(), productBasicInfo.getPrice(), productBasicInfo.getSerialNumber(),
                 productBasicInfo.getDescription(), productBasicInfo.getUseStatus(), uploadedFileList);
 
