@@ -3,6 +3,10 @@ package com.toy.jeongoo.product.api;
 import com.toy.jeongoo.product.api.dto.request.ProductCertificationFailedRequest;
 import com.toy.jeongoo.product.service.ProductCertificationService;
 import com.toy.jeongoo.utils.DefaultResponse;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +24,11 @@ public class ProductCertificationController {
 
     private final ProductCertificationService certificationService;
 
+    @ApiOperation(value = "정품 인증", notes = "정품 인증 상태로 바꾼다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "정품 인증 성공"),
+            @ApiResponse(code = 400, message = "구매 인증 오류")
+    })
     @PutMapping("/{productId}/certification")
     public DefaultResponse<Long> certify(@PathVariable Long productId) {
         try {
@@ -31,9 +40,14 @@ public class ProductCertificationController {
         }
     }
 
+    @ApiOperation(value = "정품 인증 실패", notes = "정품 인증 실패 상태로 바꾼다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "정품 인증 실패 알림 성공"),
+            @ApiResponse(code = 400, message = "정품 인증 실패 알림 오류")
+    })
     @PutMapping("/{productId}/certification/failure")
     public DefaultResponse<Long> certifyFailed(@PathVariable Long productId,
-                                               @RequestBody ProductCertificationFailedRequest certificationFailedRequest) {
+                                               @ApiParam(name = "정품 인증 실패 이유") @RequestBody ProductCertificationFailedRequest certificationFailedRequest) {
         try {
             Long certificationFailedProduct = certificationService.failed(productId, certificationFailedRequest);
             return DefaultResponse.res(OK, CERTIFICATE_PRODUCT_FAIL, certificationFailedProduct);

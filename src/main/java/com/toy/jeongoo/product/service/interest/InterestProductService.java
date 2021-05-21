@@ -7,6 +7,7 @@ import com.toy.jeongoo.product.service.ProductFindService;
 import com.toy.jeongoo.user.model.User;
 import com.toy.jeongoo.user.service.UserFindService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class InterestProductService {
@@ -61,6 +63,8 @@ public class InterestProductService {
         final User interestedUser = userFindService.findUser(interestedUserId);
         final InterestProduct interestProduct = interestProductRepository.findByProductAndInterestedUser(product, interestedUser)
                 .orElseThrow(() -> new IllegalArgumentException("not found interestProduct."));
+
+        product.deleteInterestProduct(interestProduct);
         interestProductRepository.delete(interestProduct);
         return interestProduct.getId();
     }
