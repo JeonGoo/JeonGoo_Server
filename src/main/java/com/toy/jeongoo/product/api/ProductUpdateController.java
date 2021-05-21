@@ -1,14 +1,17 @@
 package com.toy.jeongoo.product.api;
 
+import com.toy.jeongoo.product.api.dto.request.ProductBasicInfoRequest;
 import com.toy.jeongoo.product.api.dto.request.ProductGradeUpdateRequest;
-import com.toy.jeongoo.product.api.dto.request.ProductUpdateRequest;
 import com.toy.jeongoo.product.service.ProductUpdateService;
 import com.toy.jeongoo.utils.DefaultResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+
+import java.util.List;
 
 import static com.toy.jeongoo.utils.ResponseMessage.*;
 import static com.toy.jeongoo.utils.StatusCode.*;
@@ -23,9 +26,11 @@ public class ProductUpdateController {
 
     @PutMapping("/{productId}")
     public DefaultResponse<Long> update(@PathVariable Long productId,
-                                        @RequestBody ProductUpdateRequest updateRequest) {
+                                        ProductBasicInfoRequest productBasicInfoRequest,
+                                        @RequestPart(name = "imageFiles", required = false) List<MultipartFile> imageFiles,
+                                        @RequestPart(name = "videoFile", required = false) MultipartFile videoFile) {
         try {
-            final Long product = productUpdateService.update(productId, updateRequest.getProductBasicInfoRequest(), updateRequest.getFileInfoRequest());
+            final Long product = productUpdateService.update(productId, productBasicInfoRequest, imageFiles, videoFile);
             return DefaultResponse.res(OK, UPDATE_PRODUCT, product);
         } catch (Exception productException) {
             log.error(productException.getMessage());
