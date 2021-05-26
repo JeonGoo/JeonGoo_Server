@@ -1,9 +1,12 @@
 package com.toy.jeongoo.config;
 
+import com.toy.jeongoo.config.model.PageApiModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Pageable;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.schema.AlternateTypeRules;
 import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.SecurityReference;
@@ -18,10 +21,12 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+
     @Bean
     public Docket api() {
-
         return new Docket(DocumentationType.SWAGGER_2)
+                .alternateTypeRules(
+                        AlternateTypeRules.newRule(Pageable.class, PageApiModel.class))
                 .useDefaultResponseMessages(false)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.toy.jeongoo"))
