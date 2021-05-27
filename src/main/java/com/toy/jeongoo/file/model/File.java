@@ -1,5 +1,6 @@
 package com.toy.jeongoo.file.model;
 
+import com.toy.jeongoo.common.entity.BaseTimeEntity;
 import com.toy.jeongoo.product.model.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import static lombok.AccessLevel.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-public class File {
+public class File extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)

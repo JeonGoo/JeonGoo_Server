@@ -1,6 +1,7 @@
 package com.toy.jeongoo.product.model;
 
 import com.toy.jeongoo.common.Money;
+import com.toy.jeongoo.common.entity.BaseTimeEntity;
 import com.toy.jeongoo.file.model.File;
 import com.toy.jeongoo.product.api.dto.request.ProductGradeUpdateRequest;
 import com.toy.jeongoo.product.model.interest.InterestProduct;
@@ -26,7 +27,7 @@ import static lombok.AccessLevel.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-public class Product {
+public class Product extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)

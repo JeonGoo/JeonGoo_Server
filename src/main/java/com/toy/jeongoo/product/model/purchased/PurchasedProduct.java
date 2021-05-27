@@ -1,5 +1,6 @@
 package com.toy.jeongoo.product.model.purchased;
 
+import com.toy.jeongoo.common.entity.BaseTimeEntity;
 import com.toy.jeongoo.product.model.Product;
 import com.toy.jeongoo.user.model.User;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import static lombok.AccessLevel.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-public class PurchasedProduct {
+public class PurchasedProduct extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
