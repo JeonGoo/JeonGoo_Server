@@ -1,7 +1,8 @@
 package com.toy.jeongoo.order.order.model;
 
 import com.toy.jeongoo.common.Money;
-import com.toy.jeongoo.order.product.model.Product;
+import com.toy.jeongoo.common.entity.BaseTimeEntity;
+import com.toy.jeongoo.order.product.model.OrderProduct;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import static javax.persistence.GenerationType.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OrderLine {
+public class OrderLine extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -21,14 +22,14 @@ public class OrderLine {
     private Long id;
 
     @Embedded
-    private Product product;
+    private OrderProduct orderProduct;
 
     private int quantity;
     private Money totalAmount;
 
-    public OrderLine(Product product, int quantity, Money totalAmount) {
-        this.product = product;
+
+    public OrderLine(OrderProduct orderProduct, int quantity) {
+        this.orderProduct = orderProduct;
         this.quantity = quantity;
-        this.totalAmount = totalAmount;
     }
 }
