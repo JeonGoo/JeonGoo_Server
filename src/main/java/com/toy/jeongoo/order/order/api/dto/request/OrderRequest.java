@@ -10,10 +10,12 @@ import java.util.List;
 public class OrderRequest {
 
     private List<OrderLineRequest> orderLineRequestList;
+    private Long ordererId;
     private ShippingInfoRequest shippingInfoRequest;
 
-    public OrderRequest(List<OrderLineRequest> orderLineRequestList, ShippingInfoRequest shippingInfoRequest) {
+    public OrderRequest(List<OrderLineRequest> orderLineRequestList, Long ordererId, ShippingInfoRequest shippingInfoRequest) {
         this.orderLineRequestList = orderLineRequestList;
+        this.ordererId = ordererId;
         this.shippingInfoRequest = shippingInfoRequest;
     }
 }

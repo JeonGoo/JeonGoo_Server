@@ -16,10 +16,10 @@ public class ShippingInfo {
     private Address address;
 
     @Embedded
-    private Orderer orderer;
+    private Receiver receiver;
 
-    public ShippingInfo(Address address, Orderer orderer) {
+    public ShippingInfo(Address address, Receiver receiver) {
         this.address = address;
-        this.orderer = orderer;
+        this.receiver = receiver;
     }
 }

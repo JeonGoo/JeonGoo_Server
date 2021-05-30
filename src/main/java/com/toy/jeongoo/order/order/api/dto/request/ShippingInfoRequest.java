@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ShippingInfoRequest {
 
-    private Long ordererId;
+    private ReceiverRequest receiverRequest;
     private AddressDto addressDto;
 
-    public ShippingInfoRequest(Long ordererId, AddressDto addressDto) {
-        this.ordererId = ordererId;
+    public ShippingInfoRequest(ReceiverRequest receiverRequest, AddressDto addressDto) {
+        this.receiverRequest = receiverRequest;
         this.addressDto = addressDto;
     }
 }
