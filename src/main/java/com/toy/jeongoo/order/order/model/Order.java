@@ -26,10 +26,14 @@ public class Order extends BaseTimeEntity {
     private List<OrderLine> orderLineList = new ArrayList<>();
 
     @Embedded
+    private Orderer orderer;
+
+    @Embedded
     private ShippingInfo shippingInfo;
 
-    public Order(List<OrderLine> orderLineList, ShippingInfo shippingInfo) {
+    public Order(List<OrderLine> orderLineList, Orderer orderer, ShippingInfo shippingInfo) {
         this.orderLineList = orderLineList;
+        this.orderer = orderer;
         this.shippingInfo = shippingInfo;
     }
 }

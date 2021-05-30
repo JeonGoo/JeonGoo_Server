@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
@@ -13,7 +14,11 @@ import javax.persistence.Embeddable;
 public class OrderProduct {
 
     private Long productId;
+
+    @Column(name = "order_product_name")
     private String name;
+
+    @Column(name = "order_product_price")
     private Money price;
 
     public OrderProduct(Long productId, String name, Money price) {
