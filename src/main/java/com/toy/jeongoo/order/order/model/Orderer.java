@@ -12,7 +12,8 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Orderer {
 
-    private Long ordererId;
+    @Column(name = "orderer_id")
+    private Long id;
 
     @Column(name = "orderer_name")
     private String name;
@@ -20,8 +21,8 @@ public class Orderer {
     @Column(name = "orderer_phone_number")
     private String phoneNumber;
 
-    public Orderer(Long ordererId, String name, String phoneNumber) {
-        this.ordererId = ordererId;
+    public Orderer(Long id, String name, String phoneNumber) {
+        this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
     }

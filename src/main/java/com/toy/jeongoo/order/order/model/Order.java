@@ -12,6 +12,7 @@ import java.util.List;
 
 import static javax.persistence.GenerationType.*;
 
+@Table(name = "ORDERS")
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

@@ -21,12 +21,18 @@ public class OrderLine extends BaseTimeEntity {
     @Column(name = "order_line_id")
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private Order order;
+
     @Embedded
     private OrderProduct orderProduct;
 
+    @Column(name = "quantity")
     private int quantity;
-    private Money totalAmount;
 
+    @AttributeOverride(name = "value", column = @Column(name = "total_amount"))
+    private Money totalAmount;
 
     public OrderLine(OrderProduct orderProduct, int quantity) {
         this.orderProduct = orderProduct;
