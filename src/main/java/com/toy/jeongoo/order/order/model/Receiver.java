@@ -11,10 +11,10 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 public class Receiver {
 
-    @Column(name = "receiver_name")
+    @Column(name = "receiver_name", nullable = false)
     private String name;
 
-    @Column(name = "receiver_phone_number")
+    @Column(name = "receiver_phone_number", nullable = false)
     private String phoneNumber;
 
     public Receiver(String name, String phoneNumber) {

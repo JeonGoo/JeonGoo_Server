@@ -36,8 +36,15 @@ public class Order extends BaseTimeEntity {
         this.orderLineList = orderLineList;
         this.orderer = orderer;
         this.shippingInfo = shippingInfo;
-        for(OrderLine orderLine : orderLineList){
+        checkOneOrMoreOrderLine(orderLineList);
+        for (OrderLine orderLine : orderLineList) {
             orderLine.changeOrder(this);
+        }
+    }
+
+    private void checkOneOrMoreOrderLine(List<OrderLine> orderLineList) {
+        if (orderLineList.isEmpty()) {
+            throw new IllegalArgumentException("Order must have at least one order list.");
         }
     }
 }

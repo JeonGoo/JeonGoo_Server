@@ -13,10 +13,10 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 public class Address {
 
-    @Column(name = "city")
+    @Column(name = "city", nullable = false)
     private String city;
 
-    @Column(name = "detailed")
+    @Column(name = "detailed", nullable = false)
     private String detailed;
 
     public Address(String city, String detailed) {

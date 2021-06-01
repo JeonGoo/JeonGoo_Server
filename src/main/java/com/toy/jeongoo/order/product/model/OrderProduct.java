@@ -14,13 +14,13 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderProduct {
 
-    @Column(name = "order_product_id")
+    @Column(name = "order_product_id", nullable = false)
     private Long id;
 
     @Column(name = "order_product_name")
     private String name;
 
-    @AttributeOverride(name = "value", column = @Column(name = "order_product_price"))
+    @AttributeOverride(name = "value", column = @Column(name = "order_product_price", nullable = false))
     private Money price;
 
     public OrderProduct(Long id, String name, Money price) {

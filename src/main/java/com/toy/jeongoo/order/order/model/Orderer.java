@@ -12,13 +12,13 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Orderer {
 
-    @Column(name = "orderer_id")
+    @Column(name = "orderer_id", nullable = false)
     private Long id;
 
-    @Column(name = "orderer_name")
+    @Column(name = "orderer_name", nullable = false)
     private String name;
 
-    @Column(name = "orderer_phone_number")
+    @Column(name = "orderer_phone_number", nullable = false)
     private String phoneNumber;
 
     public Orderer(Long id, String name, String phoneNumber) {
