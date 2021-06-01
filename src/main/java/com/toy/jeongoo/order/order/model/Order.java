@@ -23,7 +23,7 @@ public class Order extends BaseTimeEntity {
     @Column(name = "order_id")
     private Long id;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderLine> orderLineList = new ArrayList<>();
 
     @Embedded
@@ -36,5 +36,8 @@ public class Order extends BaseTimeEntity {
         this.orderLineList = orderLineList;
         this.orderer = orderer;
         this.shippingInfo = shippingInfo;
+        for(OrderLine orderLine : orderLineList){
+            orderLine.changeOrder(this);
+        }
     }
 }

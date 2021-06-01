@@ -28,4 +28,8 @@ public class Money {
             throw new IllegalArgumentException(String.format("money should not be negative. input money: %d", value));
         }
     }
+
+    public Money mul(int quantity) {
+        return Money.of(this.value * quantity);
+    }
 }

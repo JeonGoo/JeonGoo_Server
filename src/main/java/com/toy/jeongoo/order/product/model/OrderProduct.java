@@ -28,4 +28,8 @@ public class OrderProduct {
         this.name = name;
         this.price = price;
     }
+
+    public Money calculateAmount(int quantity) {
+        return this.price.mul(quantity);
+    }
 }

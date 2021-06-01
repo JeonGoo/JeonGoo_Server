@@ -37,5 +37,10 @@ public class OrderLine extends BaseTimeEntity {
     public OrderLine(OrderProduct orderProduct, int quantity) {
         this.orderProduct = orderProduct;
         this.quantity = quantity;
+        this.totalAmount = orderProduct.calculateAmount(quantity);
+    }
+
+    public void changeOrder(Order order) {
+        this.order = order;
     }
 }
