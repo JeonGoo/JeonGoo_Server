@@ -44,6 +44,9 @@ public class OrderService {
 
     private OrderProduct toProduct(OrderLineRequest orderLineRequest) {
         final Product product = productFindService.findProduct(orderLineRequest.getProductId());
+        if(product.isSoldOut()){
+            throw new IllegalArgumentException("This product has already been sold.");
+        }
         return new OrderProduct(product.getId(), product.getName(), product.getPrice());
     }
 

@@ -35,6 +35,7 @@ public class OrderLine extends BaseTimeEntity {
     private Money totalAmount;
 
     public OrderLine(OrderProduct orderProduct, int quantity) {
+        checkOneOrMoreQuantity(quantity);
         this.orderProduct = orderProduct;
         this.quantity = quantity;
         this.totalAmount = orderProduct.calculateAmount(quantity);
@@ -42,5 +43,11 @@ public class OrderLine extends BaseTimeEntity {
 
     public void changeOrder(Order order) {
         this.order = order;
+    }
+
+    private void checkOneOrMoreQuantity(int quantity) {
+        if(quantity <= 0){
+            throw new IllegalArgumentException("The number of order product must have at least one.");
+        }
     }
 }
