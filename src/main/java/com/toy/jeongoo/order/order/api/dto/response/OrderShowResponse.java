@@ -31,7 +31,6 @@ public class OrderShowResponse {
     }
 
     private List<OrderLineDto> toOrderLineDtoList(List<OrderLine> orderLineList) {
-        System.out.println(orderLineList.size());
         return orderLineList.stream()
                 .map(OrderLineDto::new)
                 .collect(Collectors.toList());
