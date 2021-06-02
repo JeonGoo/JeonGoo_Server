@@ -1,12 +1,16 @@
 package com.toy.jeongoo.order.order.api;
 
+import com.toy.jeongoo.order.exception.OrderNotFoundException;
 import com.toy.jeongoo.order.order.api.dto.response.OrderShowResponse;
 import com.toy.jeongoo.order.order.model.Order;
 import com.toy.jeongoo.order.order.repository.OrderRepository;
+import com.toy.jeongoo.order.order.repository.query.OrderQueryRepository;
+import com.toy.jeongoo.order.order.service.OrderFindService;
 import com.toy.jeongoo.utils.DefaultResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +29,7 @@ import static com.toy.jeongoo.utils.StatusCode.OK;
 public class OrderFindController {
 
     private final OrderRepository orderRepository;
+    private final OrderFindService orderFindService;
 
     @GetMapping
     public DefaultResponse<List<OrderShowResponse>> showAll() {
@@ -37,10 +42,35 @@ public class OrderFindController {
         }
     }
 
+    @GetMapping("/{orderId}")
+    public DefaultResponse<OrderShowResponse> showOrder(@PathVariable Long orderId) {
+        try {
+            final Order order = orderFindService.findOrder(orderId);
+            return DefaultResponse.res(OK, FIND_ORDER, toOrderShowResponse(order));
+        } catch (OrderNotFoundException e) {
+            log.error(e.getMessage());
+            return DefaultResponse.res(BAD_REQUEST, FIND_ORDER_FAIL);
+        }
+    }
+
+    @GetMapping("/orderer/{ordererId}")
+    public DefaultResponse<List<OrderShowResponse>> showOrderByOrderer(@PathVariable Long ordererId) {
+        try {
+            final List<Order> orderList = orderFindService.findAllOrderByOrderer(ordererId);
+            return DefaultResponse.res(OK, FIND_ORDER, toOrderShowResponseList(orderList));
+        } catch (OrderNotFoundException e) {
+            log.error(e.getMessage());
+            return DefaultResponse.res(BAD_REQUEST, FIND_ORDER_FAIL);
+        }
+    }
+
     private List<OrderShowResponse> toOrderShowResponseList(List<Order> orderList) {
         return orderList.stream()
-                .map(order -> new OrderShowResponse(order.getId(), order.getOrderLineList(),
-                        order.getOrderer(), order.getShippingInfo()))
+                .map(this::toOrderShowResponse)
                 .collect(Collectors.toList());
+    }
+
+    private OrderShowResponse toOrderShowResponse(Order order) {
+        return new OrderShowResponse(order.getId(), order.getOrderLineList(), order.getOrderer(), order.getShippingInfo());
     }
 }
