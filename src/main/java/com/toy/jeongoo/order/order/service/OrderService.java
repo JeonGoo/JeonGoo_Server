@@ -38,15 +38,16 @@ public class OrderService {
 
     private List<OrderLine> toOrderLineList(List<OrderLineRequest> orderLineRequestList) {
         return orderLineRequestList.stream()
-                .map(ol -> new OrderLine(toProduct(ol), ol.getQuantity()))
+                .map(ol -> new OrderLine(toOrderProduct(ol), ol.getQuantity()))
                 .collect(Collectors.toList());
     }
 
-    private OrderProduct toProduct(OrderLineRequest orderLineRequest) {
+    private OrderProduct toOrderProduct(OrderLineRequest orderLineRequest) {
         final Product product = productFindService.findProduct(orderLineRequest.getProductId());
-        if(product.isSoldOut()){
+        if (product.isSoldOut()) {
             throw new IllegalArgumentException("This product has already been sold.");
         }
+        product.soldOut();
         return new OrderProduct(product.getId(), product.getName(), product.getPrice());
     }
 
