@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource(value = {"classpath:jwt.yml", "classpath:aws.yml", "classpath:credentials.yml"},
+@PropertySource(value = {"classpath:jwt.yml", "classpath:aws.yml", "classpath:credentials.yml", "classpath:kakao.yml"},
         factory = YamlPropertySourceFactory.class, ignoreResourceNotFound = true)
 public class YamlPropertyConfig {
 }
