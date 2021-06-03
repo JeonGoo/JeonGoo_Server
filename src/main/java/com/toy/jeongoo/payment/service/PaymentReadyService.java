@@ -18,7 +18,7 @@ import org.springframework.util.MultiValueMap;
 @RequiredArgsConstructor
 public class PaymentReadyService {
     private static final String HOST = "https://kapi.kakao.com/v1/payment/ready";
-    private static final String APPROVAL_URL = "http://localhost:8080/api/v1/payment/success";
+    private static final String APPROVAL_URL = "http://15.164.90.61:8080/api/v1/payment/approve";
     private static final String CANCEL_URL = "http://http://15.164.90.61:8080/v1/payment/cancel";
     private static final String FAIL_URL = "http://http://15.164.90.61:8080/v1/payment/fail";
 
