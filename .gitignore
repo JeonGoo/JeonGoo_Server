@@ -4,7 +4,11 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-*.yml
+application-db.yml
+aws.yml
+credentials.yml
+jwt.yml
+kakao.yml
 
 ### STS ###
 .apt_generated
