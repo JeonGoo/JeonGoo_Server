@@ -20,7 +20,7 @@ class ProductTest {
         Product product = createProduct();
 
         //when
-        product.certify(ProductGrade.HIGH);
+        product.certify();
 
         //then
         assertThat(product.getCertificationStatus()).isEqualTo(CertificationStatus.COMPLETED);
@@ -31,24 +31,12 @@ class ProductTest {
     public void certifyCanCertificationExceptionTest() throws Exception {
         //given
         Product product = createProduct();
-        product.certify(ProductGrade.HIGH);
+        product.certify();
 
         //then
-        assertThatThrownBy(() -> product.certify(ProductGrade.HIGH))
+        assertThatThrownBy(product::certify)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("the product has already been certify or failed to certification.");
-    }
-
-    @Test
-    @DisplayName("상품 인증시 상품 등급이 NONE이면 오류 발생")
-    public void certifyGradeIsNotNoneExceptionTest() throws Exception {
-        //given
-        Product product = createProduct();
-
-        //then
-        assertThatThrownBy(() -> product.certify(ProductGrade.NONE))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("product grade should not be none!");
     }
 
     @Test
@@ -80,6 +68,18 @@ class ProductTest {
         assertThatThrownBy(() -> product.certifyFailed(certificationFailedReason))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("the product has already been failed to certification.");
+    }
+
+    @Test
+    @DisplayName("상품 등급을 변경한다.")
+    public void changeGradeTest() throws Exception {
+        //given
+        final Product product = createProduct();
+
+        //when
+
+
+        //then
     }
 
     private Product createProduct() {
