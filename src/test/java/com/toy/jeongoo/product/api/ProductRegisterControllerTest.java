@@ -2,9 +2,7 @@ package com.toy.jeongoo.product.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.toy.jeongoo.file.dto.request.FileInfoRequest;
 import com.toy.jeongoo.product.api.dto.request.ProductBasicInfoRequest;
-import com.toy.jeongoo.product.api.dto.request.ProductRegistrationRequest;
 import com.toy.jeongoo.product.model.status.UseStatus;
 import com.toy.jeongoo.user.model.User;
 import com.toy.jeongoo.user.repository.UserRepository;
@@ -54,22 +52,20 @@ class ProductRegisterControllerTest {
     @DisplayName("상품을 등록한다.")
     public void registerTest() throws Exception {
         //given
+        userRepository.deleteAll();
         User user = User.builder()
                 .name("user")
                 .email("test@test.com")
                 .password("1234")
                 .build();
         userRepository.save(user);
-        System.out.println(user.getId());
 
         final ProductBasicInfoRequest basicInfoRequest = new ProductBasicInfoRequest("product", 1000L, "2134", "good product", UseStatus.USED);
-        final ProductRegistrationRequest registrationRequest = new ProductRegistrationRequest(basicInfoRequest, new FileInfoRequest());
-        final String registrationRequestString = objectMapper.writeValueAsString(registrationRequest);
 
         //when
         final MvcResult mvcResult = mockMvc.perform(post("/api/v1/products/users/" + user.getId())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(registrationRequestString))
+                .content(objectMapper.writeValueAsBytes(basicInfoRequest)))
                 .andExpect(status().isOk())
                 .andReturn();
         final DefaultResponse<Long> resultValue = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<DefaultResponse<Long>>() {

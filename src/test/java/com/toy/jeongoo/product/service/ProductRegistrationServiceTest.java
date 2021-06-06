@@ -49,7 +49,7 @@ class ProductRegistrationServiceTest {
         Long userId = user.getId();
 
         //when
-        final Long registerProductId = productRegistrationService.register(basicInfoRequest, fileInfoRequest, userId);
+        final Long registerProductId = productRegistrationService.register(basicInfoRequest, null, null, userId);
         final Product product = productRepository.findById(registerProductId).get();
 
         //then

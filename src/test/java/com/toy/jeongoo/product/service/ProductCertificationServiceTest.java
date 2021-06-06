@@ -46,11 +46,10 @@ class ProductCertificationServiceTest {
     public void certifyTest() throws Exception {
         //given
         ProductGrade productGrade = ProductGrade.INTERMEDIATE;
-        ProductGradeUpdateRequest certificationRequest = new ProductGradeUpdateRequest(productGrade);
         Long productId = product.getId();
 
         //when
-        final Long certifyProductId = productCertificationService.certify(productId, certificationRequest);
+        final Long certifyProductId = productCertificationService.certify(productId);
         final Product product = productRepository.findById(certifyProductId).get();
 
         //then

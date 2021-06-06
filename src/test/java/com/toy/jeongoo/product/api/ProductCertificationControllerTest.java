@@ -22,6 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
@@ -45,18 +46,13 @@ class ProductCertificationControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private User user;
-    private Product product;
-
-    @BeforeEach
-    public void setUp() {
-        init();
-    }
-
     @Test
     @DisplayName("상품 인증 성공")
+    @Transactional
     public void certifyTest() throws Exception {
         //given
+        final User user = saveUser();
+        final Product product = saveProduct(user);
         ProductGradeUpdateRequest certificationRequest = new ProductGradeUpdateRequest(ProductGrade.HIGH);
         final String certificationRequestString = objectMapper.writeValueAsString(certificationRequest);
 
@@ -68,9 +64,14 @@ class ProductCertificationControllerTest {
     }
 
     @Test
-    @DisplayName("상품 인증시 상품 등급이 NONE이면 오류 발생")
+    @DisplayName("상품 인증시 이미 인증됐거나 실패된 상품이면 오류 발생")
+    @Transactional
     public void certifyTest_error() throws Exception {
         //given
+        final User user = saveUser();
+        final Product product = saveProduct(user);
+        product.certify();
+
         ProductGradeUpdateRequest certificationRequest = new ProductGradeUpdateRequest(ProductGrade.NONE);
         final String certificationRequestString = objectMapper.writeValueAsString(certificationRequest);
 
@@ -89,8 +90,11 @@ class ProductCertificationControllerTest {
 
     @Test
     @DisplayName("상품 인증상태를 FAILED로 바꾼다.")
+    @Transactional
     public void certifyFailedTest() throws Exception {
         //given
+        final User user = saveUser();
+        final Product product = saveProduct(user);
         ProductCertificationFailedRequest certificationFailedRequest = new ProductCertificationFailedRequest("고유한 시리얼 넘버가 아닙니다.");
         final String certificationFailedRequestString = objectMapper.writeValueAsString(certificationFailedRequest);
 
@@ -103,33 +107,30 @@ class ProductCertificationControllerTest {
 
         final DefaultResponse<Long> resultValue = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<DefaultResponse<Long>>() {
         });
-        final Product product = productRepository.findById(resultValue.getData()).get();
+        final Product actualProduct = productRepository.findById(resultValue.getData()).get();
 
         //then
-        assertThat(product.getCertificationStatus()).isEqualTo(CertificationStatus.FAILED);
-        assertThat(product.getCertificationFailedReason()).isEqualTo(certificationFailedRequest.getCertificationFailedReason());
+        assertThat(actualProduct.getCertificationStatus()).isEqualTo(CertificationStatus.FAILED);
+        assertThat(actualProduct.getCertificationFailedReason()).isEqualTo(certificationFailedRequest.getCertificationFailedReason());
     }
 
-    private void init() {
-        saveUser();
-        saveProduct();
-    }
-
-    private void saveUser() {
-        user = User.builder()
+    private User saveUser() {
+        User user = User.builder()
                 .name("user")
                 .password("1234")
                 .address(new Address("중구", "102호"))
-                .email("test@test.com")
+                .email("testUser@test.com")
                 .gender(Gender.MALE)
                 .phoneNumber("010-1234-5678")
                 .build();
         userRepository.save(user);
+        return user;
     }
 
-    private void saveProduct() {
-        product = new Product("상품", 10000L, "12345",
+    private Product saveProduct(User user) {
+        Product product = new Product("상품", 10000L, "12345",
                 "좋은 상품", UseStatus.USED, user, new ArrayList<>());
         productRepository.save(product);
+        return product;
     }
 }
