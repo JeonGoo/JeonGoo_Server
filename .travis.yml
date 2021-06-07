@@ -3,10 +3,10 @@ jdk:
   - openjdk8
 
 # push될 떄 수행할 브랜치 설정
-branches:
-  only:
-    - master
-    - develop
+#branches:
+#  only:
+#    - master
+#    - develop
 
 # Travis CI Server Home
 cache:
