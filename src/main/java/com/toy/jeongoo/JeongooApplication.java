@@ -19,9 +19,11 @@ public class JeongooApplication {
             + "/app/config/geongoo/real-application.yml";
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(Application.class)
-                .properties(APPLICATION_LOCATIONS)
-                .run(args);
+        SpringApplication.run(JeongooApplication.class);
+
+//        new SpringApplicationBuilder(Application.class)
+//                .properties(APPLICATION_LOCATIONS)
+//                .run(args);
     }
 
     @Bean
